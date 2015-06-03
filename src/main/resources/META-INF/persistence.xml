@@ -2,9 +2,18 @@
 <persistence version="2.1"
 	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="customerPU" transaction-type="JTA">
-		<jta-data-source>jdbc/test-angular</jta-data-source>
-		<class>model.Customer</class>
+	<persistence-unit name="alfa2PU" transaction-type="JTA">
+		<jta-data-source>mydbForAlfa2</jta-data-source>
+		<class>model.Album</class>
+                <class>model.Camara</class>
+                <class>model.Comentario</class>
+                <class>model.Etiqueta</class>
+                <class>model.Familia</class>
+                <class>model.Favorito</class>
+                <class>model.Imagen</class>
+                <class>model.Permiso</class>
+                <class>model.Tag</class>
+                <class>model.Usuario</class>
 	</persistence-unit>
 
 </persistence>
