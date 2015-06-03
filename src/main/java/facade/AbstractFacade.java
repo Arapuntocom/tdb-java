@@ -28,6 +28,7 @@ public abstract class AbstractFacade<T> {
     protected abstract EntityManager getEntityManager();
 
     public void create(T entity) {
+        getEntityManager().persist(entity);
         logger.info("AbstractFacade: incia 'create(T entity)'");
         try{
             getEntityManager().persist(entity);
