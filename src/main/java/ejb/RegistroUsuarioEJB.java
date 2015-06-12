@@ -2,7 +2,6 @@ package ejb;
 
 import facade.UsuarioFacadeLocal;
 import java.util.Date;
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -60,12 +59,21 @@ public class RegistroUsuarioEJB implements RegistroUsuarioEJBLocal {
         logger.log(Level.INFO, "RegistroUsuarioEJB: genero->\t{0}", nuevo.getSexoUsuario());
         logger.log(Level.INFO, "RegistroUsuarioEJB: pa\u00eds->\t{0}", nuevo.getPaisUsuario());
         
+        if(!usuarioFacade.existeEmail(nuevo.getEmailUsuario()) && !usuarioFacade.existeUserName(nuevo.getUsername())){
+            
+            usuarioFacade.create(nuevo);
+            logger.log(Level.INFO, "RegistroUsuarioEJB: usuario creado, la cantidad de usuarios es: {0}", usuarioFacade.count());
+            
+        }else{
+           logger.severe("RegistroUsuarioEJB: No se ha podido registrar al nuevo usuario, el userName o el email ya se encuentra registrado");
+        }       
+        /*
         if(usuarioFacade.esNuevo(nuevo.getEmailUsuario())){
             usuarioFacade.create(nuevo);
             logger.info("RegistroUsuarioEJB: usuario creado, la cantidad de usuarios es: "+usuarioFacade.count());
         }else{
            logger.severe("RegistroUsuarioEJB: No se ha podido registrar al nuevo usuario, el email ya se encuentra registrado");
-        }      
+        }      */
         
     }    
 
