@@ -105,8 +105,10 @@ public class Imagen implements Serializable {
     @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario usuarioidusuario;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "imagen", fetch = FetchType.EAGER)
     private List<Permiso> permisoList;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "imagenidimagen", fetch = FetchType.EAGER)
     private List<Comentario> comentarioList;
 
