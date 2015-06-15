@@ -7,22 +7,22 @@ package ejb;
 
 import java.util.List;
 import javax.ejb.Local;
-import model.Usuario;
+import model.Imagen;
 
 /**
  *
  * @author Aracelly
  */
 @Local
-public interface TestUsuariosEJBLocal {
+public interface TestImagenesEJBLocal {
     
+    public void editar(Imagen imagen);
     
-    public void editar(Usuario usuario);
+    public Imagen encontrarId(int id);
     
-    public Usuario encontrarId(int id);
-    
-    public List<Usuario> encontrarTodos();
+    public List<Imagen> encontrarTodos();
     
     public int cantidad();
-   
+    
+    public void crear(Imagen imagen);
 }

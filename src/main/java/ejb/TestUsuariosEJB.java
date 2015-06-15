@@ -5,7 +5,6 @@
  */
 package ejb;
 
-import facade.UsuarioFacade;
 import facade.UsuarioFacadeLocal;
 import java.util.List;
 import java.util.logging.Logger;
