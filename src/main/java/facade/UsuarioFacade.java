@@ -123,48 +123,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         }                
         return !list.isEmpty();
     }
-    
-    /*
-    Esta función comprueba si un usuario es nuevo mediate la comprobación de su email.
-    busca una lista de usuarios con el mismo email, si dicha lista esta vacía,
-    quiere decir que nadie se ha registrado con dicho email.
-    retorna verdadero si la lista esta vacia. 
-    */
-    @Override
-    public boolean esNuevo(String email){
-        List<Usuario> list = null;
-        try{
-            Query qq = (Query) em.createNamedQuery("Usuario.findByEmailUsuario", Usuario.class).setParameter("emailUsuario", email);
-            list = qq.getResultList();
-            if(!list.isEmpty()){
-                logger.info("UsuarioFacade: ya existe(n) usuario(s) con ese email, cantidad="+list.size());
-            }else{
-                logger.info("UsuarioFacade: no se encontro ningún usuario con ese email");
-            }
-            logger.info("UsuarioFacade: esNuevo() -> "+list.isEmpty());
-        }catch(IllegalArgumentException e){
-            logger.severe("UsuarioFacade: el nombre o el parametro de la Query no existe -> "+e);
-        }catch(IllegalStateException e){
-            logger.severe("UsuarioFacade: ocurrio un problema con la consulta -> "+e);
-        }
-        catch(QueryTimeoutException e){
-            logger.severe("UsuarioFacade: ocurrio un problema con la consulta -> "+e);
-        }
-        catch(TransactionRequiredException e){
-            logger.severe("UsuarioFacade: ocurrio un problema con la consulta -> "+e);
-        }
-        catch(PessimisticLockException e){
-            logger.severe("UsuarioFacade: ocurrio un problema con la consulta -> "+e);
-        }
-        catch(LockTimeoutException e){
-            logger.severe("UsuarioFacade: ocurrio un problema con la consulta -> "+e);
-        }
-        catch(PersistenceException e){
-            logger.severe("UsuarioFacade: ocurrio un problema con la consulta -> "+e);
-        }                
-        return list.isEmpty();
-    }
-    
+        
     @Override
     public Usuario getUsuario(String userName, String pass){
         
