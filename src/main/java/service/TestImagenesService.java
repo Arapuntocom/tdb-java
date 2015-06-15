@@ -17,6 +17,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import model.Comentario;
 import model.Imagen;
 
 /**
@@ -26,7 +27,8 @@ import model.Imagen;
 @Stateless
 @Path("imagenesTest")
 public class TestImagenesService {
-     static final Logger logger = Logger.getLogger(TestImagenesService.class.getName());
+    
+    static final Logger logger = Logger.getLogger(TestImagenesService.class.getName());
        
     @EJB
     TestImagenesEJBLocal testImagenesEJBLocal;
@@ -67,4 +69,12 @@ public class TestImagenesService {
     public int countREST() {
         return testImagenesEJBLocal.cantidad();
     }    
+    
+    @GET
+    @Path("comentario/{imagenId}")
+    @Produces("application/json")
+    public List<Comentario> comentariosImagenId(@PathParam("imagenId") Integer imagenId) {
+        logger.info("find comentarios imagenId");
+        return testImagenesEJBLocal.encontrarId(imagenId).getComentarioList();
+    }
 }
