@@ -1,7 +1,6 @@
 package ejb;
 
 import javax.ejb.Local;
-
 import model.UsuarioRegistroPost;
 
 @Local

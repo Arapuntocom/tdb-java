@@ -29,7 +29,10 @@ public interface UsuarioFacadeLocal {
     List<Usuario> findRange(int[] range);
 
     int count();
-
-    public boolean esNuevo(String email);
     
+    public Usuario getUsuario(String userName, String pass);
+    
+    public boolean existeEmail(String email);
+    
+    public boolean existeUserName(String username);
 }

@@ -26,16 +26,14 @@ public class RegistroUsuarioService {
     @POST
     @Consumes("application/json")
     public void create(UsuarioRegistroPost usuarioPost) {   
-        
-        logger.info("Logger name->"+logger.getName());
-        logger.info("service: inicia creación, con objeto UsuarioRegistroPost.");
-        logger.info("service: dia->"+usuarioPost.getDia());
-        logger.info("service: genero->"+usuarioPost.getSexo());
-        logger.info("service: fono->"+usuarioPost.getFono());
+        logger.info("inicia creación, con objeto UsuarioRegistroPost.");
+        logger.info("UsuarioPost.dia->"+usuarioPost.getDia());
+        logger.info("UsuarioPost.genero->"+usuarioPost.getSexo());
+        logger.info("UsuarioPost.fono->"+usuarioPost.getFono());
         
         registroUsuarioEJBLocal.agregarUsuario(usuarioPost);
-        //registroUsuarioEJBLocal.agregarUsuario(usuarioPost.getEmail(), usuarioPost.getPass(), usuarioPost.getPass2(), usuarioPost.getNombre(), usuarioPost.getDia(), usuarioPost.getMes(), usuarioPost.getYear(), usuarioPost.getTelefono(), usuarioPost.getGenero(), 200);
-        logger.info("service: finalizada la creación.");
+        
+        logger.info("finalizada metodo create, con UsuarioPost.");
     }
     
     @POST
@@ -45,9 +43,9 @@ public class RegistroUsuarioService {
             @PathParam("pass2") Integer pass2,@PathParam("nombre") String nombre,
             @PathParam("dia") Integer dia,@PathParam("mes") Integer mes,@PathParam("year") Integer year,
             @PathParam("fono") String fono,@PathParam("sexo") String sexo,@PathParam("id") Integer id) {
-        logger.info("service: inicia la creación con datos. Algunos datos son: email-> "+email+" pass-> "+pass+" nombre-> "+nombre);
+        logger.info("service: inicia la creación con datos en URL. Algunos datos son: email-> "+email+" pass-> "+pass+" nombre-> "+nombre);
         registroUsuarioEJBLocal.agregarUsuario(email, pass, pass2, nombre, dia, mes, year, fono, sexo, id);
-        logger.info("service: finalizada la creación.");
+        logger.info("finalizada metodo create, con datos en URL");
     }
 
 }
