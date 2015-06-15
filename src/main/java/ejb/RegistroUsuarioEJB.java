@@ -2,6 +2,7 @@ package ejb;
 
 import facade.UsuarioFacadeLocal;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -40,9 +41,10 @@ public class RegistroUsuarioEJB implements RegistroUsuarioEJBLocal {
         nuevo.setNombreUsuario(usuarioPost.getNombre());
         nuevo.setNumeroMovilusuario(usuarioPost.getFono());
         nuevo.setSexoUsuario(usuarioPost.getSexo());
-        Date nacimiento = new Date(usuarioPost.getYear()-1900, usuarioPost.getMes()-1, usuarioPost.getDia());
-        nuevo.setFechaNacimientousuario(nacimiento);
                
+        GregorianCalendar c = new GregorianCalendar(usuarioPost.getYear(), usuarioPost.getMes()-1, usuarioPost.getDia());
+        Date nacimiento = new Date(c.getTimeInMillis());       
+        nuevo.setFechaNacimientousuario(nacimiento);
         
         nuevo.setIdUsuario(200);
         nuevo.setApellidoUsuario("ApellidoDefault");
@@ -67,14 +69,7 @@ public class RegistroUsuarioEJB implements RegistroUsuarioEJBLocal {
         }else{
            logger.severe("RegistroUsuarioEJB: No se ha podido registrar al nuevo usuario, el userName o el email ya se encuentra registrado");
         }       
-        /*
-        if(usuarioFacade.esNuevo(nuevo.getEmailUsuario())){
-            usuarioFacade.create(nuevo);
-            logger.info("RegistroUsuarioEJB: usuario creado, la cantidad de usuarios es: "+usuarioFacade.count());
-        }else{
-           logger.severe("RegistroUsuarioEJB: No se ha podido registrar al nuevo usuario, el email ya se encuentra registrado");
-        }      */
-        
+                
     }    
 
     @Override
@@ -91,7 +86,8 @@ public class RegistroUsuarioEJB implements RegistroUsuarioEJBLocal {
         nuevo.setApellidoUsuario("apellido1");
         nuevo.setEmailUsuario(email);
         nuevo.setPassUsuario(""+pass);
-        Date nacimiento = new Date(year-1900, mes-1, dia);
+        GregorianCalendar c = new GregorianCalendar(year, mes-1, dia);
+        Date nacimiento = new Date(c.getTimeInMillis());       
         nuevo.setFechaNacimientousuario(nacimiento);
         nuevo.setNombreUsuario(nombre);
         nuevo.setNumeroMovilusuario(""+fono);
@@ -117,11 +113,13 @@ public class RegistroUsuarioEJB implements RegistroUsuarioEJBLocal {
         logger.log(Level.FINEST, "RegistroUsuarioEJB: genero->\t{0}", nuevo.getSexoUsuario());
         logger.log(Level.FINEST, "RegistroUsuarioEJB: pa\u00eds->\t{0}", nuevo.getPaisUsuario());
         
-        if(usuarioFacade.esNuevo(nuevo.getEmailUsuario())){
+        if(!usuarioFacade.existeEmail(nuevo.getEmailUsuario()) && !usuarioFacade.existeUserName(nuevo.getUsername())){
+            
             usuarioFacade.create(nuevo);
-            logger.info("RegistroUsuarioEJB: usuario creado, la cantidad de usuarios es: "+usuarioFacade.count());
+            logger.log(Level.INFO, "RegistroUsuarioEJB: usuario creado, la cantidad de usuarios es: {0}", usuarioFacade.count());
+            
         }else{
-           logger.severe("RegistroUsuarioEJB: No se ha podido registrar al nuevo usuario, el email ya se encuentra registrado");
+           logger.severe("RegistroUsuarioEJB: No se ha podido registrar al nuevo usuario, el userName o el email ya se encuentra registrado");
         }   
         logger.exiting(RegistroUsuarioEJB.class.getName(),"agregarUsuario");
     }   
