@@ -9,8 +9,11 @@ import ejb.InicioSesionEJBLocal;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import model.Usuario;
 
@@ -31,14 +34,32 @@ public class InicioSesionService {
     * retorna 204 si no se encuentra el usuario.
     */
     @POST 
-    @Produces("application/json")
+    @Consumes("application/json")
     public Usuario iniciarSesion(Usuario user){
         logger.info("inicia sesion Objeto, retorno objeto");
         logger.info("User name->"+user.getUsername());
         logger.info("User pass->"+user.getPassUsuario());
-        // probar con username->    userNameDefault
-        //         passUsuario->    1234
+        
         return inicioSesionEJBLocal.iniciarSesion(user);
+    }
+    
+    @GET 
+    @Produces("application/json")
+    @Path("/{username}/{passUsuario}")
+    public Usuario iniciarSes(@PathParam("username") String username, @PathParam("passUsuario") String passUsuario){
+        
+        System.out.println("username->"+username);
+        System.out.println("pass->"+passUsuario);
+        logger.info("inicia sesion GET");
+       // logger.info("Get para User name->"+user.getUsername());
+        //logger.info("Get para User pass->"+user.getPassUsuario());
+        
+        //return inicioSesionEJBLocal.iniciarSesion(user);
+        Usuario a = new Usuario();
+        a.setUsername(username);
+        a.setPassUsuario(passUsuario);
+        a.setIdUsuario(28);
+        return a;
     }
     
     // con retorno String, no hace nada, status 200

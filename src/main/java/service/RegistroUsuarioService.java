@@ -7,6 +7,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
 import ejb.RegistroUsuarioEJBLocal;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -29,7 +31,7 @@ public class RegistroUsuarioService {
         logger.info("inicia creación, con objeto UsuarioRegistroPost.");
         logger.info("UsuarioPost.dia->"+usuarioPost.getDia());
         logger.info("UsuarioPost.genero->"+usuarioPost.getSexo());
-        logger.info("UsuarioPost.fono->"+usuarioPost.getFono());
+        logger.info("UsuarioPost.fono->"+usuarioPost.getFono());  
         
         registroUsuarioEJBLocal.agregarUsuario(usuarioPost);
         

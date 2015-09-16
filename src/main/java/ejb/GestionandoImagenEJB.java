@@ -6,7 +6,8 @@
 package ejb;
 
 import java.sql.Date;
-import java.time.Instant;
+import java.util.Calendar;
+//import java.time.Instant;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -28,7 +29,10 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
         logger.setLevel(Level.ALL);
         logger.entering("agregarComentarioEJB","agregarComentario");
         comentario.setClasificacionComentario("desclasificado");
-        comentario.setFechaComentario(Date.from(Instant.EPOCH));
+        comentario.setFechaComentario(Calendar.getInstance().getTime());
+        
+        logger.info("fecha ->"+Calendar.getInstance().getTime());
+        //comentario.setFechaComentario(Date.from(Instant.EPOCH));
         
         comentario.setIdComentario(200);
         comentario.setImagenidimagen(null);
