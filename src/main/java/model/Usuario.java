@@ -344,7 +344,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Usuario[ idUsuario=" + idUsuario + " ]";
+        return "model.Usuario[ idUsuario=" + idUsuario + " userName="+username+" ]";
     }
     
 }
