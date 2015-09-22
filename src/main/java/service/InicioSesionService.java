@@ -9,11 +9,8 @@ import ejb.InicioSesionEJBLocal;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import model.Usuario;
 
@@ -25,7 +22,7 @@ import model.Usuario;
 @Path("inicio")
 public class InicioSesionService {
     static final Logger logger = Logger.getLogger(InicioSesionService.class.getName());
-    
+    //logger-> service.InicioSesionService
     @EJB
     InicioSesionEJBLocal inicioSesionEJBLocal;
     
@@ -34,35 +31,14 @@ public class InicioSesionService {
     * retorna 204 si no se encuentra el usuario.
     */
     @POST 
-    @Consumes("application/json")
+    @Produces("application/json")
     public Usuario iniciarSesion(Usuario user){
-        logger.entering(this.getClass().getName(), "iniciarSesion", new Object[]{user.getUsername(), user.getPassUsuario()});
-        user = inicioSesionEJBLocal.iniciarSesion(user);
-        logger.exiting(this.getClass().getName(), "iniciarSesion", user.toString());
-        return user;
-    }
-    
-    @GET 
-    @Produces("application/json")
-    public Usuario iniciarSesionGet(Usuario user){
-        logger.entering(this.getClass().getName(), "iniciarSesionGet", new Object[]{user.getUsername(), user.getPassUsuario()});
-        user = inicioSesionEJBLocal.iniciarSesion(user);
-        logger.exiting(this.getClass().getName(), "iniciarSesionGet", user.toString());
-        return user;
-    }
-    
-    @GET 
-    @Produces("application/json")
-    @Path("/{username}/{passUsuario}")
-    public Usuario iniciarSesionParam(@PathParam("username") String username, @PathParam("passUsuario") String passUsuario){
-        logger.entering(this.getClass().getName(), "iniciarSesionParam", new Object[]{username, passUsuario});
-        Usuario a = new Usuario();
-        a.setUsername(username);
-        a.setPassUsuario(passUsuario);
-        a.setIdUsuario(28);
-        a = inicioSesionEJBLocal.iniciarSesion(a);
-        logger.exiting(this.getClass().getName(), "iniciarSesionParam", a.toString());
-        return a;
+        logger.info("inicia sesion Objeto, retorno objeto");
+        logger.info("User name->"+user.getUsername());
+        logger.info("User pass->"+user.getPassUsuario());
+        // probar con username->    userNameDefault
+        //         passUsuario->    1234
+        return inicioSesionEJBLocal.iniciarSesion(user);
     }
     
     // con retorno String, no hace nada, status 200

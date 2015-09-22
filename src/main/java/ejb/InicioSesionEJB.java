@@ -21,7 +21,7 @@ public class InicioSesionEJB implements InicioSesionEJBLocal{
     static final Logger logger = Logger.getLogger(InicioSesionEJB.class.getName());
     
     @EJB
-    private UsuarioFacadeLocal usuarioFacadeLocal;
+    private UsuarioFacadeLocal usuarioFacade;
 
     public InicioSesionEJB() {
         
@@ -30,17 +30,15 @@ public class InicioSesionEJB implements InicioSesionEJBLocal{
     
     @Override
     public Usuario iniciarSesion(Usuario iniciante){
-        logger.entering(this.getClass().getName(), "iniciarSesion", iniciante.toString());
         String userName = iniciante.getUsername();
         String pass =  iniciante.getPassUsuario();
-        iniciante = usuarioFacadeLocal.getUsuario(userName, pass);
+        iniciante = usuarioFacade.getUsuario(userName, pass);
         if(iniciante != null){
-            logger.exiting(this.getClass().getName(), "iniciarSesion", iniciante.toString());
+            logger.info("Usuario encontrado, id->"+iniciante.getIdUsuario());
             return iniciante;
         }else{
-            logger.exiting(this.getClass().getName(), "iniciarSesion", "Usuario No encontrado");
+            logger.info("Usuario No encontrado");
             return null;
-        } 
-        
+        }       
     }
 }

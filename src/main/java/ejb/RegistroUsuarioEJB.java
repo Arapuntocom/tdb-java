@@ -47,9 +47,8 @@ public class RegistroUsuarioEJB implements RegistroUsuarioEJBLocal {
         nuevo.setFechaNacimientousuario(nacimiento);
         
         nuevo.setIdUsuario(200);
-        nuevo.setApellidoUsuario(usuarioPost.getApellido());
-        nuevo.setPaisUsuario(usuarioPost.getPais());
-        nuevo.setUsername(usuarioPost.getNombre_usuario());
+        nuevo.setApellidoUsuario("ApellidoDefault");
+        nuevo.setPaisUsuario("PaisDefault");        
         
         /*mostrando en el log los datos ingresados*/
         logger.log(Level.INFO, "RegistroUsuarioEJB: id->\t\t{0}", nuevo.getIdUsuario());
@@ -60,8 +59,7 @@ public class RegistroUsuarioEJB implements RegistroUsuarioEJBLocal {
         logger.log(Level.INFO, "RegistroUsuarioEJB: fono->\t{0}", nuevo.getNumeroMovilusuario());
         logger.log(Level.INFO, "RegistroUsuarioEJB: nacimiento->\t{0}", nuevo.getFechaNacimientousuario());
         logger.log(Level.INFO, "RegistroUsuarioEJB: genero->\t{0}", nuevo.getSexoUsuario());
-        logger.log(Level.INFO, "RegistroUsuarioEJB: pais->\t{0}", nuevo.getPaisUsuario());
-        logger.log(Level.INFO, "RegistroUsuarioEJB: username->\t{0}", nuevo.getUsername());
+        logger.log(Level.INFO, "RegistroUsuarioEJB: pa\u00eds->\t{0}", nuevo.getPaisUsuario());
         
         if(!usuarioFacade.existeEmail(nuevo.getEmailUsuario()) && !usuarioFacade.existeUserName(nuevo.getUsername())){
             
