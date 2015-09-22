@@ -14,16 +14,15 @@ import clean.SimpleTokenizer;
 import clean.StopWordsRemoval;
 import clean.Tokenizer;
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 /**
  *
  * @author Aracelly
  */
-public class PruebaWeka implements Clasificador{
-    
-    //NuevaClase aa = new NuevaClase();   
-    
+public class ClasificadorWeka implements Clasificador{
+        
     @Override
     public String clasificar(String texto) throws IOException, Exception{
         NormalizerTweets normalizer = new NormalizerTweets();
@@ -39,4 +38,12 @@ public class PruebaWeka implements Clasificador{
         
         return clasificado.aString(clasificacion);  
     }
+    /*
+    public static void main(String args[]) throws Exception{
+        ClasificadorWeka nn = new ClasificadorWeka();
+        String comentario = "feo malo negativo no no ";
+        System.out.println("La clasificacion de '"+comentario+"' es -> "+nn.clasificar(comentario));      
+        
+    }
+    */    
 }

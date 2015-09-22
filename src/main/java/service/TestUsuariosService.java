@@ -6,6 +6,8 @@
 package service;
 
 import ejb.TestUsuariosEJBLocal;
+import facade.AlbumFacadeLocal;
+import facade.UsuarioFacadeLocal;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -18,6 +20,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import model.Album;
 import model.Usuario;
 
 /**
@@ -32,6 +35,9 @@ public class TestUsuariosService {
        
     @EJB
     TestUsuariosEJBLocal testUsuariosEJBLocal;
+    
+    @EJB
+    UsuarioFacadeLocal UsuarioFacadeLocal;
     
     @PUT
     @Path("{id}")
@@ -62,6 +68,25 @@ public class TestUsuariosService {
     @Produces("text/plain")
     public int countREST() {
         return testUsuariosEJBLocal.cantidad();
+    }
+    
+    @GET
+    @Path("albumes")
+    @Produces("application/json")
+    public List<Album> albumesUser(){
+        int idUser = 5;
+        Usuario user = UsuarioFacadeLocal.find(idUser);        
+        if(user!=null){
+            List<Album> retorno = user.getAlbumList();
+            if(retorno.isEmpty()){
+                return null;
+            }
+            else{
+                return retorno;
+            }
+        }else{            
+            return null;
+        }       
     }
     
 }
