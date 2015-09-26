@@ -8,7 +8,6 @@ package ejb;
 import facade.ComentarioFacadeLocal;
 import facade.ImagenFacadeLocal;
 import facade.UsuarioFacadeLocal;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -215,7 +214,6 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
     public List<Comentario> agregarComentario(Comentario comentario) {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "agregarComentario");
-        //String clasificacion = "no disponible";
         int clasificacion = 69;
         /*try {
         clasificacion = clasificadorWekaLocal.clasificar(comentario.getTextoComentario());
@@ -244,7 +242,6 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
             
             
             logger.exiting(this.getClass().getName(), "agregarComentario", comentarios.size());
-            //return imagen.getComentarioList();
             return comentarios;
         }
         else{
