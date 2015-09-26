@@ -5,9 +5,9 @@ apply plugin: 'eclipse'
 repositories {
     mavenCentral() 
     flatDir{
-        dirs 'lib'
-        dirs 'lib/lib'
-        dirs 'lib/resources'
+        dirs 'clasificadorWeka'
+        dirs 'clasificadorWeka/lib'
+        dirs 'clasificadorWeka/resources'
     }    
 }
 	  

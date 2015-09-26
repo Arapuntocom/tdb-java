@@ -55,7 +55,10 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().toString(), "getImagen(id)");
         Imagen retorno = gestionandoImagenEJB.getImagen(id);
-        logger.exiting(this.getClass().toString(), "getImagen(id)");
+        if(retorno != null)
+            logger.exiting(this.getClass().toString(), "getImagen(id)", retorno.toString());
+        else
+            logger.exiting(this.getClass().toString(), "getImagen(id)");
         return retorno;    
     }
     
@@ -68,7 +71,7 @@ public class GestionandoImagenService {
         logger.exiting(this.getClass().toString(), "createImagen(imagen)");
     }
     
-    
+    // retorna la lista de comentarios de la imagen
     @GET
     @Path("comentarios")
     @Produces("application/json")
@@ -76,7 +79,10 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListComentarios", idImagen);
         List<Comentario> retorno = gestionandoImagenEJB.getListComentarios(idImagen);
-        logger.exiting(this.getClass().getName(), "getListComentarios", retorno.size());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "getListComentarios", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "getListComentarios", "Sin resultados");
         return retorno;        
     }
     
@@ -87,7 +93,10 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListTags", idImagen);
         List<Tag> retorno = gestionandoImagenEJB.getListTags(idImagen);
-        logger.exiting(this.getClass().getName(), "getListTags", retorno.size());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "getListTags", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "getListTags", "Sin resultados");
         return retorno;        
     }
     
@@ -98,7 +107,10 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListEtiquetas", idImagen);
         List<Etiqueta> retorno = gestionandoImagenEJB.getListEtiquetas(idImagen);
-        logger.exiting(this.getClass().getName(), "getListEtiquetas", retorno.size());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "getListEtiquetas", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "getListEtiquetas", "Sin resultados");
         return retorno;        
     }
     
@@ -109,7 +121,10 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListFavoritos", idImagen);
         List<Favorito> retorno = gestionandoImagenEJB.getListFavoritos(idImagen);
-        logger.exiting(this.getClass().getName(), "getListFavoritos", retorno.size());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "getListFavoritos", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "getListFavoritos", "Sin resultados");
         return retorno;        
     }
     
@@ -120,7 +135,10 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListPermisos", idImagen);
         List<Permiso> retorno = gestionandoImagenEJB.getListPermisos(idImagen);
-        logger.exiting(this.getClass().getName(), "getListPermisos", retorno.size());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "getListPermisos", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "getListPermisos", "Sin resultados");
         return retorno;        
     }
     
@@ -142,7 +160,10 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListAlbumes", idUsuario);
         List<Album> retorno = gestionandoImagenEJB.getAlbumesUsuario(idUsuario);
-        logger.exiting(this.getClass().getName(), "getListAlbumes", retorno.size());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "getListAlbumes", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "getListAlbumes", "sin resultados");
         return retorno;
     }
     
@@ -154,7 +175,10 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListComentarios", idImagen);
         List<Comentario> retorno = gestionandoImagenEJB.getListComentarios(idImagen);
-        logger.exiting(this.getClass().getName(), "getListComentarios", retorno.size());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "getListComentarios", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "getListComentarios", "Sin resultados");
         return retorno;        
     }    
     
@@ -165,7 +189,10 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListTags", idImagen);
         List<Tag> retorno = gestionandoImagenEJB.getListTags(idImagen);
-        logger.exiting(this.getClass().getName(), "getListTags", retorno.size());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "getListTags", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "getListTags", "Sin resultados");
         return retorno;        
     }
     
@@ -176,7 +203,10 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListEtiquetas", idImagen);
         List<Etiqueta> retorno = gestionandoImagenEJB.getListEtiquetas(idImagen);
-        logger.exiting(this.getClass().getName(), "getListEtiquetas", retorno.size());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "getListEtiquetas", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "getListEtiquetas", "Sin resultados");
         return retorno;        
     }
     
@@ -187,7 +217,10 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListFavoritos", idImagen);
         List<Favorito> retorno = gestionandoImagenEJB.getListFavoritos(idImagen);
-        logger.exiting(this.getClass().getName(), "getListFavoritos", retorno.size());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "getListFavoritos", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "getListFavoritos", "Sin resultados");
         return retorno;        
     }
     
@@ -198,7 +231,10 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListPermisos", idImagen);
         List<Permiso> retorno = gestionandoImagenEJB.getListPermisos(idImagen);
-        logger.exiting(this.getClass().getName(), "getListPermisos", retorno.size());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "getListPermisos", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "getListPermisos", "Sin resultados");
         return retorno;        
     }
     
@@ -209,7 +245,6 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getCantFavoritos", idImagen);
         int retorno = gestionandoImagenEJB.cantFavoritos(idImagen);
-        logger.exiting(this.getClass().getName(), "getCantFavoritos", retorno);
         return retorno;        
     }
      
@@ -220,26 +255,24 @@ public class GestionandoImagenService {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListAlbumes", idUsuario);
         List<Album> retorno = gestionandoImagenEJB.getAlbumesUsuario(idUsuario);
-        logger.exiting(this.getClass().getName(), "getListAlbumes", retorno.size());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "getListAlbumes", retorno.size());        
+        else
+            logger.exiting(this.getClass().getName(), "getListAlbumes", "Sin resultados"); 
         return retorno;
     }
     
     @POST
-    @Path("newComentario")
+    @Path("addComentario")
     @Consumes("application/json")
-    public void create(Comentario comentario) {   
+    public List<Comentario> agregarComentario(Comentario comentario) {   
         logger.setLevel(Level.ALL);
-        logger.entering(this.getClass().getName(), "create", comentario.getTextoComentario());
-       /* logger.log(Level.FINEST,"Clasificacion->{0}" , comentario.getClasificacionComentario());
-        logger.log(Level.FINEST,"Fecha->{0}" , comentario.getFechaComentario());
-        logger.log(Level.FINEST,"Id->{0}" , comentario.getIdComentario());
-        logger.log(Level.FINEST,"Imagen.Path->{0}" , comentario.getImagenidimagen().getPathImagen());
-        logger.log(Level.FINEST,"Texto->{0}" , comentario.getTextoComentario());
-        logger.log(Level.FINEST,"Usuario.Email->{0}" , comentario.getUsuarioidusuario().getEmailUsuario());            
-        
-        logger.info("service: inicia creación, con objeto Comentario.");
-        //gestionandoImagenEJB.agregarComentario(comentario);
-        */
-        logger.exiting("GestionandoImagenService", "create(Comentario)");
+        logger.entering(this.getClass().getName(), "create", "comentante "+comentario.getClasificacionComentario()+", en la imagen "+comentario.getIdComentario());
+        List<Comentario> retorno = gestionandoImagenEJB.agregarComentario(comentario);
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "create(Comentario)", retorno);
+        else
+            logger.exiting(this.getClass().getName(), "create(Comentario)", "Sin resultados");
+        return retorno;
     }
 }

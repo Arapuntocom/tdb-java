@@ -6,11 +6,12 @@
 package facade;
 
 import java.util.List;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockTimeoutException;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.PessimisticLockException;
@@ -131,15 +132,16 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         try{
             Query qq = (Query) em.createNamedQuery("Usuario.findby userName and pass", Usuario.class).setParameter("username", userName).setParameter("passUsuario", pass);
             usuario = (Usuario) qq.getSingleResult();
-            if(usuario ==null){
-                logger.info("No se encuentra usuario y contraseña indicados");
-            }else{
-                logger.info("Se retorna el usuario de id->"+usuario.getIdUsuario());
-                return usuario;
-            }
         }catch(IllegalArgumentException e){
             logger.severe("UsuarioFacade: el nombre o el parametro de la Query no existe -> "+e);
-        }catch(IllegalStateException e){
+        }
+        catch(NoResultException e){
+            logger.severe("No hay resultados -> "+e);
+        }
+        catch(NonUniqueResultException e){
+            logger.severe("hay mas de un resulado -> "+e);
+        }
+        catch(IllegalStateException e){
             logger.severe("UsuarioFacade: ocurrio un problema con la consulta -> "+e);
         }
         catch(QueryTimeoutException e){
@@ -156,7 +158,14 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         }
         catch(PersistenceException e){
             logger.severe("UsuarioFacade: ocurrio un problema con la consulta -> "+e);
-        }                
-        return null;       
+        }     
+        
+        if(usuario == null){
+                logger.info("No se encuentra usuario y contrasenha indicados");
+                return null;
+        }else{
+            logger.info("Se retorna el usuario de id->"+usuario.getIdUsuario());
+            return usuario;
+        }
     }    
 }

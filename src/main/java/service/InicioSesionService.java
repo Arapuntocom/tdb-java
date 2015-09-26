@@ -6,6 +6,7 @@
 package service;
 
 import ejb.InicioSesionEJBLocal;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -36,18 +37,27 @@ public class InicioSesionService {
     @POST 
     @Consumes("application/json")
     public Usuario iniciarSesion(Usuario user){
+        logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "iniciarSesion", new Object[]{user.getUsername(), user.getPassUsuario()});
         user = inicioSesionEJBLocal.iniciarSesion(user);
         logger.exiting(this.getClass().getName(), "iniciarSesion", user.toString());
+        if(user != null)
+            logger.exiting(this.getClass().getName(), "iniciarSesionGet", user.toString());
+        else
+            logger.exiting(this.getClass().getName(), "iniciarSesionGet", "Sin resultados");
         return user;
     }
     
     @GET 
     @Produces("application/json")
     public Usuario iniciarSesionGet(Usuario user){
+        logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "iniciarSesionGet", new Object[]{user.getUsername(), user.getPassUsuario()});
         user = inicioSesionEJBLocal.iniciarSesion(user);
-        logger.exiting(this.getClass().getName(), "iniciarSesionGet", user.toString());
+        if(user != null)
+            logger.exiting(this.getClass().getName(), "iniciarSesionGet", user.toString());
+        else
+            logger.exiting(this.getClass().getName(), "iniciarSesionGet", "Sin resultados");
         return user;
     }
     
@@ -55,28 +65,20 @@ public class InicioSesionService {
     @Produces("application/json")
     @Path("/{username}/{passUsuario}")
     public Usuario iniciarSesionParam(@PathParam("username") String username, @PathParam("passUsuario") String passUsuario){
+        logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "iniciarSesionParam", new Object[]{username, passUsuario});
         Usuario a = new Usuario();
         a.setUsername(username);
         a.setPassUsuario(passUsuario);
         a.setIdUsuario(28);
         a = inicioSesionEJBLocal.iniciarSesion(a);
-        logger.exiting(this.getClass().getName(), "iniciarSesionParam", a.toString());
+        if(a != null){
+            logger.exiting(this.getClass().getName(), "iniciarSesionParam", a.toString());
+        }else{
+            logger.exiting(this.getClass().getName(), "iniciarSesionParam", "Sin resultados");
+        }        
         return a;
     }
-    
-    // con retorno String, no hace nada, status 200
-    
-    /*
-    // tipo void, cualquier caso siempre queda el status 204, e indica que ha fallado la aplicación.    
-    @POST 
-    @Produces("application/json")
-    public void iniciarSesion(Usuario user){
-        logger.info("inicia sesion Objeto");
-        logger.info("Objeto user name->"+user.getUsername());
-        logger.info("Objeto user pass->"+user.getPassUsuario());
-       // logger.info("id encontrado ->"+inicioSesionEJBLocal.iniciarSesion(user).getIdUsuario());
-    }
-    */
+      
   
 }

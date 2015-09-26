@@ -70,23 +70,5 @@ public class TestUsuariosService {
         return testUsuariosEJBLocal.cantidad();
     }
     
-    @GET
-    @Path("albumes")
-    @Produces("application/json")
-    public List<Album> albumesUser(){
-        int idUser = 5;
-        Usuario user = UsuarioFacadeLocal.find(idUser);        
-        if(user!=null){
-            List<Album> retorno = user.getAlbumList();
-            if(retorno.isEmpty()){
-                return null;
-            }
-            else{
-                return retorno;
-            }
-        }else{            
-            return null;
-        }       
-    }
     
 }

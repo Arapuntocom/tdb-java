@@ -57,12 +57,15 @@ public class Comentario implements Serializable {
     private Date fechaComentario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    //@Size(min = 1, max = 45)
     @Column(name = "clasificacion_comentario")
-    private String clasificacionComentario;
+    //private String clasificacionComentario;
+    private Integer clasificacionComentario;
+    
     @JoinColumn(name = "Imagen_id_imagen", referencedColumnName = "id_imagen")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Imagen imagenidimagen;
+    
     @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario usuarioidusuario;
@@ -74,12 +77,12 @@ public class Comentario implements Serializable {
         this.idComentario = idComentario;
     }
 
-    public Comentario(Integer idComentario, String textoComentario, Date fechaComentario, String clasificacionComentario) {
-        this.idComentario = idComentario;
-        this.textoComentario = textoComentario;
-        this.fechaComentario = fechaComentario;
-        this.clasificacionComentario = clasificacionComentario;
-    }
+    /* public Comentario(Integer idComentario, String textoComentario, Date fechaComentario, String clasificacionComentario) {
+    this.idComentario = idComentario;
+    this.textoComentario = textoComentario;
+    this.fechaComentario = fechaComentario;
+    this.clasificacionComentario = clasificacionComentario;
+    }*/
 
     public Integer getIdComentario() {
         return idComentario;
@@ -105,14 +108,21 @@ public class Comentario implements Serializable {
         this.fechaComentario = fechaComentario;
     }
 
-    public String getClasificacionComentario() {
-        return clasificacionComentario;
+    /*public String getClasificacionComentario() {
+    return clasificacionComentario;
     }
-
+    
     public void setClasificacionComentario(String clasificacionComentario) {
-        this.clasificacionComentario = clasificacionComentario;
-    }
+    this.clasificacionComentario = clasificacionComentario;
+    }*/
 
+    public int getClasificacionComentario() {
+    return clasificacionComentario;
+    }
+    
+    public void setClasificacionComentario(int clasificacionComentario) {
+    this.clasificacionComentario = clasificacionComentario;
+    }
     public Imagen getImagenidimagen() {
         return imagenidimagen;
     }

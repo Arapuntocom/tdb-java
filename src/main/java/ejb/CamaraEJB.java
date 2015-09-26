@@ -5,17 +5,18 @@
  */
 package ejb;
 
-import facade.CamaraFacade;
 import facade.CamaraFacadeLocal;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import model.Camara;
 
 /**
  *
  * @author Aracelly
  */
+@Stateless
 public class CamaraEJB implements CamaraEJBLocal {
     
     static final Logger logger = Logger.getLogger(CamaraEJB.class.getName());
@@ -27,8 +28,7 @@ public class CamaraEJB implements CamaraEJBLocal {
     public List<Camara> getCamaras(){
         logger.entering(this.getClass().getName(), "getCamaras");
         List<Camara> retorno = camaraFacadeLocal.findAll();
-        //mostrar las con mas ocurrencia en las imagenes.
-        //hacer columna o tabla de ranking de camaras, y llenarla con un procedimiento almacenado.
+        //falta rankear (mostrar las mas usadas)
         if(retorno.isEmpty()){
             logger.exiting(this.getClass().getName(), "getCamaras", false);
             return null;

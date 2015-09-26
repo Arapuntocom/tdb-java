@@ -43,4 +43,6 @@ public interface GestionandoImagenEJBLocal {
     public int cantFavoritos(int idImagen);
     
     public List<Album> getAlbumesUsuario(int idUsuario);
+    
+    public List<Comentario> agregarComentario(Comentario comentario);
 }

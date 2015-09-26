@@ -6,12 +6,14 @@
 package ejb;
 
 import java.util.List;
+import javax.ejb.Local;
 import model.Camara;
 
 /**
  *
  * @author Aracelly
  */
+@Local
 public interface CamaraEJBLocal {
     
     public List<Camara> getCamaras();

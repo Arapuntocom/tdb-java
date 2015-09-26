@@ -6,12 +6,14 @@
 package ejb;
 
 import java.io.IOException;
+import javax.ejb.Local;
 
 /**
  *
  * @author Aracelly
  */
-public interface Clasificador {
+@Local
+public interface ClasificadorWekaLocal {
     
     public String clasificar(String texto) throws IOException, Exception;
 }
