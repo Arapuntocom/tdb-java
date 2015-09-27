@@ -5,10 +5,10 @@
  */
 package facade;
 
+import model.Camara;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import model.Camara;
 
 /**
  *
@@ -16,7 +16,7 @@ import model.Camara;
  */
 @Stateless
 public class CamaraFacade extends AbstractFacade<Camara> implements CamaraFacadeLocal {
-    @PersistenceContext(unitName = "alfa2PU")
+    @PersistenceContext(unitName = "help-tdb-ejbPU")
     private EntityManager em;
 
     @Override

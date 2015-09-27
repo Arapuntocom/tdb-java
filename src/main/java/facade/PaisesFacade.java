@@ -5,7 +5,7 @@
  */
 package facade;
 
-import model.Comentario;
+import model.Paises;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Aracelly
  */
 @Stateless
-public class ComentarioFacade extends AbstractFacade<Comentario> implements ComentarioFacadeLocal {
+public class PaisesFacade extends AbstractFacade<Paises> implements PaisesFacadeLocal {
     @PersistenceContext(unitName = "help-tdb-ejbPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class ComentarioFacade extends AbstractFacade<Comentario> implements Come
         return em;
     }
 
-    public ComentarioFacade() {
-        super(Comentario.class);
+    public PaisesFacade() {
+        super(Paises.class);
     }
     
 }

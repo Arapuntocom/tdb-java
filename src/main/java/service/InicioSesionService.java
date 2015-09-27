@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,6 +24,7 @@ import model.Usuario;
 @Stateless
 @Path("inicio")
 public class InicioSesionService {
+    
     static final Logger logger = Logger.getLogger(InicioSesionService.class.getName());
     
     @EJB
@@ -35,12 +35,11 @@ public class InicioSesionService {
     * retorna 204 si no se encuentra el usuario.
     */
     @POST 
-    @Consumes("application/json")
+    @Produces("application/json")
     public Usuario iniciarSesion(Usuario user){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "iniciarSesion", new Object[]{user.getUsername(), user.getPassUsuario()});
         user = inicioSesionEJBLocal.iniciarSesion(user);
-        logger.exiting(this.getClass().getName(), "iniciarSesion", user.toString());
         if(user != null)
             logger.exiting(this.getClass().getName(), "iniciarSesionGet", user.toString());
         else

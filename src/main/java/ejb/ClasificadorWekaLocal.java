@@ -15,5 +15,5 @@ import javax.ejb.Local;
 @Local
 public interface ClasificadorWekaLocal {
     
-    public String clasificar(String texto) throws IOException, Exception;
+    public int clasificar(String texto) throws IOException, Exception;
 }

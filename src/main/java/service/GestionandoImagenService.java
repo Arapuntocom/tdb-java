@@ -34,27 +34,28 @@ import model.Tag;
 @Path("gestionandoImagen")
 public class GestionandoImagenService {
     
-    @EJB
-    private GestionandoImagenEJBLocal gestionandoImagenEJB;
-    
     static final Logger logger = Logger.getLogger(GestionandoImagenService.class.getName());
+    
+    @EJB
+    private GestionandoImagenEJBLocal gestionandoImagenEJBLocal;   
       
+
     @PUT
     @Consumes("application/json")
     public void editImagen(Imagen imagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().toString(), "editImagen(imagen)");
-        gestionandoImagenEJB.editImagen(imagen);
+        gestionandoImagenEJBLocal.editImagen(imagen);
         logger.exiting(this.getClass().toString(), "editImagen(imagen)");
     }   
     
     @GET
-    @Path("{id}")
+    @Path("{idImagen}")
     @Produces("application/json")
-    public Imagen getImagen(@PathParam("id") Integer id){
+    public Imagen getImagen(@PathParam("idImagen") Integer id){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().toString(), "getImagen(id)");
-        Imagen retorno = gestionandoImagenEJB.getImagen(id);
+        Imagen retorno = gestionandoImagenEJBLocal.getImagen(id);
         if(retorno != null)
             logger.exiting(this.getClass().toString(), "getImagen(id)", retorno.toString());
         else
@@ -67,7 +68,7 @@ public class GestionandoImagenService {
     public void createImagen(Imagen imagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().toString(), "createImagen(imagen)");
-        gestionandoImagenEJB.createImagen(imagen);       
+        gestionandoImagenEJBLocal.createImagen(imagen);       
         logger.exiting(this.getClass().toString(), "createImagen(imagen)");
     }
     
@@ -78,7 +79,7 @@ public class GestionandoImagenService {
     public List<Comentario> getListComentarios(int idImagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListComentarios", idImagen);
-        List<Comentario> retorno = gestionandoImagenEJB.getListComentarios(idImagen);
+        List<Comentario> retorno = gestionandoImagenEJBLocal.getListComentarios(idImagen);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "getListComentarios", retorno.size());
         else
@@ -92,7 +93,7 @@ public class GestionandoImagenService {
     public List<Tag> getListTags(int idImagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListTags", idImagen);
-        List<Tag> retorno = gestionandoImagenEJB.getListTags(idImagen);
+        List<Tag> retorno = gestionandoImagenEJBLocal.getListTags(idImagen);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "getListTags", retorno.size());
         else
@@ -106,7 +107,7 @@ public class GestionandoImagenService {
     public List<Etiqueta> getListEtiquetas(int idImagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListEtiquetas", idImagen);
-        List<Etiqueta> retorno = gestionandoImagenEJB.getListEtiquetas(idImagen);
+        List<Etiqueta> retorno = gestionandoImagenEJBLocal.getListEtiquetas(idImagen);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "getListEtiquetas", retorno.size());
         else
@@ -120,7 +121,7 @@ public class GestionandoImagenService {
     public List<Favorito> getListFavoritos(int idImagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListFavoritos", idImagen);
-        List<Favorito> retorno = gestionandoImagenEJB.getListFavoritos(idImagen);
+        List<Favorito> retorno = gestionandoImagenEJBLocal.getListFavoritos(idImagen);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "getListFavoritos", retorno.size());
         else
@@ -134,7 +135,7 @@ public class GestionandoImagenService {
     public List<Permiso> getListPermisos(int idImagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListPermisos", idImagen);
-        List<Permiso> retorno = gestionandoImagenEJB.getListPermisos(idImagen);
+        List<Permiso> retorno = gestionandoImagenEJBLocal.getListPermisos(idImagen);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "getListPermisos", retorno.size());
         else
@@ -148,7 +149,7 @@ public class GestionandoImagenService {
     public int getCantFavoritos(int idImagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getCantFavoritos", idImagen);
-        int retorno = gestionandoImagenEJB.cantFavoritos(idImagen);
+        int retorno = gestionandoImagenEJBLocal.cantFavoritos(idImagen);
         logger.exiting(this.getClass().getName(), "getCantFavoritos", retorno);
         return retorno;        
     }
@@ -159,7 +160,7 @@ public class GestionandoImagenService {
     public List<Album> getListAlbumes(int idUsuario){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListAlbumes", idUsuario);
-        List<Album> retorno = gestionandoImagenEJB.getAlbumesUsuario(idUsuario);
+        List<Album> retorno = gestionandoImagenEJBLocal.getAlbumesUsuario(idUsuario);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "getListAlbumes", retorno.size());
         else
@@ -167,14 +168,14 @@ public class GestionandoImagenService {
         return retorno;
     }
     
-    
+    // para obtener los comentarios de una imagen
     @GET
-    @Path("{id}/comentarios")
+    @Path("{idImagen}/comentarios")
     @Produces("application/json")
-    public List<Comentario> getListComentarios(@PathParam("id") Integer idImagen){
+    public List<Comentario> getListComentarios(@PathParam("idImagen") Integer idImagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListComentarios", idImagen);
-        List<Comentario> retorno = gestionandoImagenEJB.getListComentarios(idImagen);
+        List<Comentario> retorno = gestionandoImagenEJBLocal.getListComentarios(idImagen);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "getListComentarios", retorno.size());
         else
@@ -183,12 +184,12 @@ public class GestionandoImagenService {
     }    
     
     @GET
-    @Path("{id}/tags")
+    @Path("{idImagen}/tags")
     @Produces("application/json")
-    public List<Tag> getListTags(@PathParam("id") Integer idImagen){
+    public List<Tag> getListTags(@PathParam("idImagen") Integer idImagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListTags", idImagen);
-        List<Tag> retorno = gestionandoImagenEJB.getListTags(idImagen);
+        List<Tag> retorno = gestionandoImagenEJBLocal.getListTags(idImagen);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "getListTags", retorno.size());
         else
@@ -197,12 +198,12 @@ public class GestionandoImagenService {
     }
     
     @GET
-    @Path("{id}/etiquetas")
+    @Path("{idImagen}/etiquetas")
     @Produces("application/json")
-    public List<Etiqueta> getListEtiquetas(@PathParam("id") Integer idImagen){
+    public List<Etiqueta> getListEtiquetas(@PathParam("idImagen") Integer idImagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListEtiquetas", idImagen);
-        List<Etiqueta> retorno = gestionandoImagenEJB.getListEtiquetas(idImagen);
+        List<Etiqueta> retorno = gestionandoImagenEJBLocal.getListEtiquetas(idImagen);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "getListEtiquetas", retorno.size());
         else
@@ -211,12 +212,12 @@ public class GestionandoImagenService {
     }
     
     @GET
-    @Path("{id}/favoritos")
+    @Path("{idImagen}/favoritos")
     @Produces("application/json")
-    public List<Favorito> getListFavoritos(@PathParam("id") Integer idImagen){
+    public List<Favorito> getListFavoritos(@PathParam("idImagen") Integer idImagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListFavoritos", idImagen);
-        List<Favorito> retorno = gestionandoImagenEJB.getListFavoritos(idImagen);
+        List<Favorito> retorno = gestionandoImagenEJBLocal.getListFavoritos(idImagen);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "getListFavoritos", retorno.size());
         else
@@ -225,12 +226,12 @@ public class GestionandoImagenService {
     }
     
     @GET
-    @Path("{id}/permisos")
+    @Path("{idImagen}/permisos")
     @Produces("application/json")
-    public List<Permiso> getListPermisos(@PathParam("id") Integer idImagen){
+    public List<Permiso> getListPermisos(@PathParam("idImagen") Integer idImagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListPermisos", idImagen);
-        List<Permiso> retorno = gestionandoImagenEJB.getListPermisos(idImagen);
+        List<Permiso> retorno = gestionandoImagenEJBLocal.getListPermisos(idImagen);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "getListPermisos", retorno.size());
         else
@@ -239,12 +240,12 @@ public class GestionandoImagenService {
     }
     
     @GET
-    @Path("{id}/favoritos/count")
+    @Path("{idImagen}/favoritos/count")
     @Produces("application/json")
-    public int getCantFavoritos(@PathParam("id") Integer idImagen){
+    public int getCantFavoritos(@PathParam("idImagen") Integer idImagen){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getCantFavoritos", idImagen);
-        int retorno = gestionandoImagenEJB.cantFavoritos(idImagen);
+        int retorno = gestionandoImagenEJBLocal.cantFavoritos(idImagen);
         return retorno;        
     }
      
@@ -254,7 +255,7 @@ public class GestionandoImagenService {
     public List<Album> getListAlbumes(@PathParam("idUsuario") Integer idUsuario){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "getListAlbumes", idUsuario);
-        List<Album> retorno = gestionandoImagenEJB.getAlbumesUsuario(idUsuario);
+        List<Album> retorno = gestionandoImagenEJBLocal.getAlbumesUsuario(idUsuario);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "getListAlbumes", retorno.size());        
         else
@@ -268,7 +269,7 @@ public class GestionandoImagenService {
     public List<Comentario> agregarComentario(Comentario comentario) {   
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "create", "comentante "+comentario.getClasificacionComentario()+", en la imagen "+comentario.getIdComentario());
-        List<Comentario> retorno = gestionandoImagenEJB.agregarComentario(comentario);
+        List<Comentario> retorno = gestionandoImagenEJBLocal.agregarComentario(comentario);
         if(retorno != null)
             logger.exiting(this.getClass().getName(), "create(Comentario)", retorno);
         else

@@ -5,10 +5,10 @@
  */
 package facade;
 
+import model.Etiqueta;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import model.Etiqueta;
 
 /**
  *
@@ -16,7 +16,7 @@ import model.Etiqueta;
  */
 @Stateless
 public class EtiquetaFacade extends AbstractFacade<Etiqueta> implements EtiquetaFacadeLocal {
-    @PersistenceContext(unitName = "alfa2PU")
+    @PersistenceContext(unitName = "help-tdb-ejbPU")
     private EntityManager em;
 
     @Override

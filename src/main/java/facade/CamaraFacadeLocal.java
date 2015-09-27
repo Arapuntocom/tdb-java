@@ -5,9 +5,9 @@
  */
 package facade;
 
+import model.Camara;
 import java.util.List;
 import javax.ejb.Local;
-import model.Camara;
 
 /**
  *

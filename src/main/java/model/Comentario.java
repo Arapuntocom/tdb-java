@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,7 +46,7 @@ public class Comentario implements Serializable {
     private Integer idComentario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 120)
     @Column(name = "texto_comentario")
     private String textoComentario;
     @Basic(optional = false)
@@ -57,18 +56,14 @@ public class Comentario implements Serializable {
     private Date fechaComentario;
     @Basic(optional = false)
     @NotNull
-    //@Size(min = 1, max = 45)
     @Column(name = "clasificacion_comentario")
-    //private String clasificacionComentario;
-    private Integer clasificacionComentario;
-    
-    @JoinColumn(name = "Imagen_id_imagen", referencedColumnName = "id_imagen")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Imagen imagenidimagen;
-    
+    private int clasificacionComentario;
     @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Usuario usuarioidusuario;
+    @JoinColumn(name = "Imagen_id_imagen", referencedColumnName = "id_imagen")
+    @ManyToOne(optional = false)
+    private Imagen imagenidimagen;
 
     public Comentario() {
     }
@@ -77,12 +72,12 @@ public class Comentario implements Serializable {
         this.idComentario = idComentario;
     }
 
-    /* public Comentario(Integer idComentario, String textoComentario, Date fechaComentario, String clasificacionComentario) {
-    this.idComentario = idComentario;
-    this.textoComentario = textoComentario;
-    this.fechaComentario = fechaComentario;
-    this.clasificacionComentario = clasificacionComentario;
-    }*/
+    public Comentario(Integer idComentario, String textoComentario, Date fechaComentario, int clasificacionComentario) {
+        this.idComentario = idComentario;
+        this.textoComentario = textoComentario;
+        this.fechaComentario = fechaComentario;
+        this.clasificacionComentario = clasificacionComentario;
+    }
 
     public Integer getIdComentario() {
         return idComentario;
@@ -108,27 +103,12 @@ public class Comentario implements Serializable {
         this.fechaComentario = fechaComentario;
     }
 
-    /*public String getClasificacionComentario() {
-    return clasificacionComentario;
-    }
-    
-    public void setClasificacionComentario(String clasificacionComentario) {
-    this.clasificacionComentario = clasificacionComentario;
-    }*/
-
     public int getClasificacionComentario() {
-    return clasificacionComentario;
-    }
-    
-    public void setClasificacionComentario(int clasificacionComentario) {
-    this.clasificacionComentario = clasificacionComentario;
-    }
-    public Imagen getImagenidimagen() {
-        return imagenidimagen;
+        return clasificacionComentario;
     }
 
-    public void setImagenidimagen(Imagen imagenidimagen) {
-        this.imagenidimagen = imagenidimagen;
+    public void setClasificacionComentario(int clasificacionComentario) {
+        this.clasificacionComentario = clasificacionComentario;
     }
 
     public Usuario getUsuarioidusuario() {
@@ -137,6 +117,14 @@ public class Comentario implements Serializable {
 
     public void setUsuarioidusuario(Usuario usuarioidusuario) {
         this.usuarioidusuario = usuarioidusuario;
+    }
+
+    public Imagen getImagenidimagen() {
+        return imagenidimagen;
+    }
+
+    public void setImagenidimagen(Imagen imagenidimagen) {
+        this.imagenidimagen = imagenidimagen;
     }
 
     @Override
@@ -161,7 +149,7 @@ public class Comentario implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Comentario[ idComentario=" + idComentario + " ]";
+        return "entity.Comentario[ idComentario=" + idComentario + " ]";
     }
     
 }
