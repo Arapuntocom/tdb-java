@@ -5,10 +5,10 @@
  */
 package facade;
 
-import model.Familia;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import model.Familia;
 
 /**
  *
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class FamiliaFacade extends AbstractFacade<Familia> implements FamiliaFacadeLocal {
-    @PersistenceContext(unitName = "help-tdb-ejbPU")
+    @PersistenceContext(unitName = "alfa2PU")
     private EntityManager em;
 
     @Override

@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findby userName and pass", query = "SELECT u FROM Usuario u WHERE u.username = :username AND u.passUsuario = :passUsuario"),
+    
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario"),
     @NamedQuery(name = "Usuario.findByUsername", query = "SELECT u FROM Usuario u WHERE u.username = :username"),
@@ -48,9 +50,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByNumeroMovilusuario", query = "SELECT u FROM Usuario u WHERE u.numeroMovilusuario = :numeroMovilusuario"),
     @NamedQuery(name = "Usuario.findByFechaNacimientousuario", query = "SELECT u FROM Usuario u WHERE u.fechaNacimientousuario = :fechaNacimientousuario"),
     @NamedQuery(name = "Usuario.findBySexoUsuario", query = "SELECT u FROM Usuario u WHERE u.sexoUsuario = :sexoUsuario"),
-    @NamedQuery(name = "Usuario.findByPaisUsuario", query = "SELECT u FROM Usuario u WHERE u.paisUsuario = :paisUsuario"),
-    @NamedQuery(name = "Usuario.findByFotosSubidas", query = "SELECT u FROM Usuario u WHERE u.fotosSubidas = :fotosSubidas"),
-    @NamedQuery(name = "Usuario.findByCantidadAlbunes", query = "SELECT u FROM Usuario u WHERE u.cantidadAlbunes = :cantidadAlbunes")})
+    @NamedQuery(name = "Usuario.findByPaisUsuario", query = "SELECT u FROM Usuario u WHERE u.paisUsuario = :paisUsuario")})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -99,35 +99,31 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "pais_usuario")
     private String paisUsuario;
-    @Column(name = "fotos_subidas")
-    private Integer fotosSubidas;
-    @Column(name = "cantidad_albunes")
-    private Integer cantidadAlbunes;
     @JoinTable(name = "seguidor", joinColumns = {
         @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario")}, inverseJoinColumns = {
         @JoinColumn(name = "Usuario_id_usuario1", referencedColumnName = "id_usuario")})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Usuario> usuarioList;
-    @ManyToMany(mappedBy = "usuarioList")
+    @ManyToMany(mappedBy = "usuarioList", fetch = FetchType.EAGER)
     private List<Usuario> usuarioList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private List<Imagen> imagenList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Permiso> permisoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private List<Favorito> favoritoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
-    private List<Album> albumList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Familia> familiaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario1")
-    private List<Familia> familiaList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioidusuario1")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioidusuario", fetch = FetchType.EAGER)
     private List<Etiqueta> etiquetaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioidusuario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioidusuario1", fetch = FetchType.EAGER)
     private List<Etiqueta> etiquetaList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioidusuario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioidusuario", fetch = FetchType.EAGER)
+    private List<Album> albumList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioidusuario", fetch = FetchType.EAGER)
+    private List<Favorito> favoritoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioidusuario", fetch = FetchType.EAGER)
+    private List<Imagen> imagenList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.EAGER)
+    private List<Permiso> permisoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioidusuario", fetch = FetchType.EAGER)
     private List<Comentario> comentarioList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.EAGER)
+    private List<Familia> familiaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario1", fetch = FetchType.EAGER)
+    private List<Familia> familiaList1;
 
     public Usuario() {
     }
@@ -227,22 +223,6 @@ public class Usuario implements Serializable {
         this.paisUsuario = paisUsuario;
     }
 
-    public Integer getFotosSubidas() {
-        return fotosSubidas;
-    }
-
-    public void setFotosSubidas(Integer fotosSubidas) {
-        this.fotosSubidas = fotosSubidas;
-    }
-
-    public Integer getCantidadAlbunes() {
-        return cantidadAlbunes;
-    }
-
-    public void setCantidadAlbunes(Integer cantidadAlbunes) {
-        this.cantidadAlbunes = cantidadAlbunes;
-    }
-
     @XmlTransient
     public List<Usuario> getUsuarioList() {
         return usuarioList;
@@ -259,60 +239,6 @@ public class Usuario implements Serializable {
 
     public void setUsuarioList1(List<Usuario> usuarioList1) {
         this.usuarioList1 = usuarioList1;
-    }
-
-    @XmlTransient
-    public List<Imagen> getImagenList() {
-        return imagenList;
-    }
-
-    public void setImagenList(List<Imagen> imagenList) {
-        this.imagenList = imagenList;
-    }
-
-    @XmlTransient
-    public List<Permiso> getPermisoList() {
-        return permisoList;
-    }
-
-    public void setPermisoList(List<Permiso> permisoList) {
-        this.permisoList = permisoList;
-    }
-
-    @XmlTransient
-    public List<Favorito> getFavoritoList() {
-        return favoritoList;
-    }
-
-    public void setFavoritoList(List<Favorito> favoritoList) {
-        this.favoritoList = favoritoList;
-    }
-
-    @XmlTransient
-    public List<Album> getAlbumList() {
-        return albumList;
-    }
-
-    public void setAlbumList(List<Album> albumList) {
-        this.albumList = albumList;
-    }
-
-    @XmlTransient
-    public List<Familia> getFamiliaList() {
-        return familiaList;
-    }
-
-    public void setFamiliaList(List<Familia> familiaList) {
-        this.familiaList = familiaList;
-    }
-
-    @XmlTransient
-    public List<Familia> getFamiliaList1() {
-        return familiaList1;
-    }
-
-    public void setFamiliaList1(List<Familia> familiaList1) {
-        this.familiaList1 = familiaList1;
     }
 
     @XmlTransient
@@ -334,12 +260,66 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
+    public List<Album> getAlbumList() {
+        return albumList;
+    }
+
+    public void setAlbumList(List<Album> albumList) {
+        this.albumList = albumList;
+    }
+
+    @XmlTransient
+    public List<Favorito> getFavoritoList() {
+        return favoritoList;
+    }
+
+    public void setFavoritoList(List<Favorito> favoritoList) {
+        this.favoritoList = favoritoList;
+    }
+
+    @XmlTransient
+    public List<Imagen> getImagenList() {
+        return imagenList;
+    }
+
+    public void setImagenList(List<Imagen> imagenList) {
+        this.imagenList = imagenList;
+    }
+
+    @XmlTransient
+    public List<Permiso> getPermisoList() {
+        return permisoList;
+    }
+
+    public void setPermisoList(List<Permiso> permisoList) {
+        this.permisoList = permisoList;
+    }
+
+    @XmlTransient
     public List<Comentario> getComentarioList() {
         return comentarioList;
     }
 
     public void setComentarioList(List<Comentario> comentarioList) {
         this.comentarioList = comentarioList;
+    }
+
+    @XmlTransient
+    public List<Familia> getFamiliaList() {
+        return familiaList;
+    }
+
+    public void setFamiliaList(List<Familia> familiaList) {
+        this.familiaList = familiaList;
+    }
+
+    @XmlTransient
+    public List<Familia> getFamiliaList1() {
+        return familiaList1;
+    }
+
+    public void setFamiliaList1(List<Familia> familiaList1) {
+        this.familiaList1 = familiaList1;
     }
 
     @Override
@@ -364,7 +344,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Usuario[ idUsuario=" + idUsuario + " ]";
+        return "model.Usuario[ idUsuario=" + idUsuario + " ]";
     }
     
 }

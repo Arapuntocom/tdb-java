@@ -3,23 +3,13 @@ apply plugin: 'war'
 apply plugin: 'eclipse'
 
 repositories {
-    mavenCentral() 
-    flatDir{
-        dirs 'clasificadorWeka'
-        dirs 'clasificadorWeka/lib'
-        dirs 'clasificadorWeka/resources'
-    }    
+	  mavenCentral() 
 }
 	  
 dependencies{
-    compile 'javax:javaee-web-api:7.0'
-    compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
-    compile 'mysql:mysql-connector-java:5.1.30'
-    compile name: 'classifier'
-    compile name: 'commons-io-2.4'
-    compile name: 'google-collections'
-    compile name: 'libsvm'
-    compile name: 'weka'    
+	compile 'javax:javaee-web-api:7.0'
+	compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+	compile 'mysql:mysql-connector-java:5.1.30'
 }
 
 sourceSets.all {
@@ -36,23 +26,23 @@ war {
 }
 
 /**
- *  ~/.gradle/gradle.properties:
- *  glassfishHome=/path/to/glassfish_home
- *
- *  or in Netbeans, right click project, Properties, Manage Build in Tasks, Run
- *  Add line to Arguments: -Dorg.gradle.project.glassfishHome=/path/to/glassfish_home
- *
- *  For more information about Exec tasks see
- *  http://www.gradle.org/docs/current/dsl/org.gradle.api.tasks.Exec.html
- */
+*  ~/.gradle/gradle.properties:
+*  glassfishHome=/path/to/glassfish_home
+*
+*  or in Netbeans, right click project, Properties, Manage Build in Tasks, Run
+*  Add line to Arguments: -Dorg.gradle.project.glassfishHome=/path/to/glassfish_home
+*
+*  For more information about Exec tasks see
+*  http://www.gradle.org/docs/current/dsl/org.gradle.api.tasks.Exec.html
+*/
 task deploy(dependsOn: 'war', type:Exec) {
-    workingDir "${glassfishHome}${File.separator}bin"
+  workingDir "${glassfishHome}${File.separator}bin"
  
-    if (System.properties['os.name'].toLowerCase().contains('osx')) {
-        commandLine 'cmd', '/c', 'asadmin.bat'
-    } else {
-        //commandLine "./asadmin"
-        commandLine 'cmd', '/c', 'asadmin.bat'
-    }
-    args "deploy", "--force=true", "${war.archivePath}"
+  if (System.properties['os.name'].toLowerCase().contains('osx')) {
+    commandLine 'cmd', '/c', 'asadmin.bat'
+  } else {
+    //commandLine "./asadmin"
+    commandLine 'cmd', '/c', 'asadmin.bat'
+  }
+  args "deploy", "--force=true", "${war.archivePath}"
 }

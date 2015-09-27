@@ -5,9 +5,9 @@
  */
 package facade;
 
-import model.Usuario;
 import java.util.List;
 import javax.ejb.Local;
+import model.Usuario;
 
 /**
  *
@@ -29,11 +29,10 @@ public interface UsuarioFacadeLocal {
     List<Usuario> findRange(int[] range);
 
     int count();
-
-    public Usuario getUsuario(String userName, String pass);
-
-    public boolean existeEmail(String emailUsuario);
-
-    public boolean existeUserName(String username);
     
+    public Usuario getUsuario(String userName, String pass);
+    
+    public boolean existeEmail(String email);
+    
+    public boolean existeUserName(String username);
 }

@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,12 +47,12 @@ public class Favorito implements Serializable {
     @Column(name = "fecha_favorito")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFavorito;
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false)
-    private Usuario idUsuario;
-    @JoinColumn(name = "id_imagen", referencedColumnName = "id_imagen")
-    @ManyToOne(optional = false)
-    private Imagen idImagen;
+    @JoinColumn(name = "Imagen_id_imagen", referencedColumnName = "id_imagen")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Imagen imagenidimagen;
+    @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Usuario usuarioidusuario;
 
     public Favorito() {
     }
@@ -81,20 +82,20 @@ public class Favorito implements Serializable {
         this.fechaFavorito = fechaFavorito;
     }
 
-    public Usuario getIdUsuario() {
-        return idUsuario;
+    public Imagen getImagenidimagen() {
+        return imagenidimagen;
     }
 
-    public void setIdUsuario(Usuario idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setImagenidimagen(Imagen imagenidimagen) {
+        this.imagenidimagen = imagenidimagen;
     }
 
-    public Imagen getIdImagen() {
-        return idImagen;
+    public Usuario getUsuarioidusuario() {
+        return usuarioidusuario;
     }
 
-    public void setIdImagen(Imagen idImagen) {
-        this.idImagen = idImagen;
+    public void setUsuarioidusuario(Usuario usuarioidusuario) {
+        this.usuarioidusuario = usuarioidusuario;
     }
 
     @Override
@@ -119,7 +120,7 @@ public class Favorito implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Favorito[ idFavorito=" + idFavorito + " ]";
+        return "model.Favorito[ idFavorito=" + idFavorito + " ]";
     }
     
 }

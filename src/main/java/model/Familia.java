@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -36,11 +37,11 @@ public class Familia implements Serializable {
     @Size(max = 45)
     @Column(name = "id_familia")
     private String idFamilia;
-    @JoinColumn(name = "Usuario_id_usuario1", referencedColumnName = "id_usuario", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Usuario usuario;
     @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Usuario usuario;
+    @JoinColumn(name = "Usuario_id_usuario1", referencedColumnName = "id_usuario", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario usuario1;
 
     public Familia() {
@@ -108,7 +109,7 @@ public class Familia implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Familia[ familiaPK=" + familiaPK + " ]";
+        return "model.Familia[ familiaPK=" + familiaPK + " ]";
     }
     
 }

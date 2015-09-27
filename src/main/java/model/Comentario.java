@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,7 +47,7 @@ public class Comentario implements Serializable {
     private Integer idComentario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 120)
+    @Size(min = 1, max = 45)
     @Column(name = "texto_comentario")
     private String textoComentario;
     @Basic(optional = false)
@@ -56,14 +57,15 @@ public class Comentario implements Serializable {
     private Date fechaComentario;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "clasificacion_comentario")
-    private int clasificacionComentario;
-    @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false)
-    private Usuario usuarioidusuario;
+    private String clasificacionComentario;
     @JoinColumn(name = "Imagen_id_imagen", referencedColumnName = "id_imagen")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Imagen imagenidimagen;
+    @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Usuario usuarioidusuario;
 
     public Comentario() {
     }
@@ -72,7 +74,7 @@ public class Comentario implements Serializable {
         this.idComentario = idComentario;
     }
 
-    public Comentario(Integer idComentario, String textoComentario, Date fechaComentario, int clasificacionComentario) {
+    public Comentario(Integer idComentario, String textoComentario, Date fechaComentario, String clasificacionComentario) {
         this.idComentario = idComentario;
         this.textoComentario = textoComentario;
         this.fechaComentario = fechaComentario;
@@ -103,20 +105,12 @@ public class Comentario implements Serializable {
         this.fechaComentario = fechaComentario;
     }
 
-    public int getClasificacionComentario() {
+    public String getClasificacionComentario() {
         return clasificacionComentario;
     }
 
-    public void setClasificacionComentario(int clasificacionComentario) {
+    public void setClasificacionComentario(String clasificacionComentario) {
         this.clasificacionComentario = clasificacionComentario;
-    }
-
-    public Usuario getUsuarioidusuario() {
-        return usuarioidusuario;
-    }
-
-    public void setUsuarioidusuario(Usuario usuarioidusuario) {
-        this.usuarioidusuario = usuarioidusuario;
     }
 
     public Imagen getImagenidimagen() {
@@ -125,6 +119,14 @@ public class Comentario implements Serializable {
 
     public void setImagenidimagen(Imagen imagenidimagen) {
         this.imagenidimagen = imagenidimagen;
+    }
+
+    public Usuario getUsuarioidusuario() {
+        return usuarioidusuario;
+    }
+
+    public void setUsuarioidusuario(Usuario usuarioidusuario) {
+        this.usuarioidusuario = usuarioidusuario;
     }
 
     @Override
@@ -149,7 +151,7 @@ public class Comentario implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Comentario[ idComentario=" + idComentario + " ]";
+        return "model.Comentario[ idComentario=" + idComentario + " ]";
     }
     
 }

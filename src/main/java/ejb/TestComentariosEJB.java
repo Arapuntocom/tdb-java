@@ -60,7 +60,7 @@ public class TestComentariosEJB implements TestComentariosEJBLocal {
     @Override
     public void crear(Comentario comentario) {
         logger.info("crear comentario por Objeto");
-//        comentario.setClasificacionComentario("Neutro");
+        comentario.setClasificacionComentario("Neutro");
         comentarioFacade.create(comentario);
     }
         
@@ -77,7 +77,7 @@ public class TestComentariosEJB implements TestComentariosEJBLocal {
             nuevo.setUsuarioidusuario(usuarioFacade.find(idUsuarioComenta));
             nuevo.setImagenidimagen(imagenFacade.find(idImagen));
 
-//            nuevo.setClasificacionComentario("Positivo");
+            nuevo.setClasificacionComentario("Positivo");
 
             
             Date fechaComentario = new Date(); //fecha y hora actual del sistema 

@@ -6,7 +6,6 @@
 package facade;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -19,27 +18,27 @@ import javax.persistence.TransactionRequiredException;
 public abstract class AbstractFacade<T> {
     private Class<T> entityClass;
 
+    static final Logger logger = Logger.getLogger(AbstractFacade.class.getName());
+    
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
+        logger.info("AbstractFacade: entidad -> "+entityClass.toString());
     }
 
     protected abstract EntityManager getEntityManager();
-    
-    static final Logger logger = Logger.getLogger(AbstractFacade.class.getName());
 
     public void create(T entity) {
-        logger.setLevel(Level.ALL);
-        logger.entering(this.getClass().getName(), "create", entity.getClass().getName());
+        getEntityManager().persist(entity);
+        logger.info("AbstractFacade: incia 'create(T entity)'");
         try{
             getEntityManager().persist(entity);
         }catch(EntityExistsException e){
-            logger.log(Level.SEVERE,"La entidad ya existe -> "+e);
+            logger.info("AbstractFacade: la entidad ya existe.");
         }catch(IllegalArgumentException e){
-            logger.log(Level.SEVERE,"La instancia no es una entidad -> "+e);
+            logger.info("AbstractFacade: la instancia no es una entidad.");
         }catch(TransactionRequiredException e){
-            logger.log(Level.SEVERE,"Ocurrio un error con la persistencia -> "+e);
+            logger.info("AbstractFacade: ocurrio un error con la persistencia -> "+e);
         }
-        logger.exiting(this.getClass().getName(), "create");
     }
 
     public void edit(T entity) {

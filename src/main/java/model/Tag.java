@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,7 +51,7 @@ public class Tag implements Serializable {
     @NotNull
     @Column(name = "ocurrencia_tag")
     private int ocurrenciaTag;
-    @ManyToMany(mappedBy = "tagList")
+    @ManyToMany(mappedBy = "tagList", fetch = FetchType.EAGER)
     private List<Imagen> imagenList;
 
     public Tag() {
@@ -121,7 +122,7 @@ public class Tag implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Tag[ idTag=" + idTag + " ]";
+        return "model.Tag[ idTag=" + idTag + " ]";
     }
     
 }

@@ -76,7 +76,7 @@ public class FamiliaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.FamiliaPK[ usuarioidusuario=" + usuarioidusuario + ", usuarioidusuario1=" + usuarioidusuario1 + " ]";
+        return "model.FamiliaPK[ usuarioidusuario=" + usuarioidusuario + ", usuarioidusuario1=" + usuarioidusuario1 + " ]";
     }
     
 }

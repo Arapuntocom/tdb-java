@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,15 +57,15 @@ public class Etiqueta implements Serializable {
     @NotNull
     @Column(name = "posicoinY_etiqueta")
     private int posicoinYetiqueta;
-    @JoinColumn(name = "Usuario_id_usuario1", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false)
-    private Usuario usuarioidusuario1;
-    @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false)
-    private Usuario usuarioidusuario;
     @JoinColumn(name = "Imagen_id_imagen", referencedColumnName = "id_imagen")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Imagen imagenidimagen;
+    @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Usuario usuarioidusuario;
+    @JoinColumn(name = "Usuario_id_usuario1", referencedColumnName = "id_usuario")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Usuario usuarioidusuario1;
 
     public Etiqueta() {
     }
@@ -112,12 +113,12 @@ public class Etiqueta implements Serializable {
         this.posicoinYetiqueta = posicoinYetiqueta;
     }
 
-    public Usuario getUsuarioidusuario1() {
-        return usuarioidusuario1;
+    public Imagen getImagenidimagen() {
+        return imagenidimagen;
     }
 
-    public void setUsuarioidusuario1(Usuario usuarioidusuario1) {
-        this.usuarioidusuario1 = usuarioidusuario1;
+    public void setImagenidimagen(Imagen imagenidimagen) {
+        this.imagenidimagen = imagenidimagen;
     }
 
     public Usuario getUsuarioidusuario() {
@@ -128,12 +129,12 @@ public class Etiqueta implements Serializable {
         this.usuarioidusuario = usuarioidusuario;
     }
 
-    public Imagen getImagenidimagen() {
-        return imagenidimagen;
+    public Usuario getUsuarioidusuario1() {
+        return usuarioidusuario1;
     }
 
-    public void setImagenidimagen(Imagen imagenidimagen) {
-        this.imagenidimagen = imagenidimagen;
+    public void setUsuarioidusuario1(Usuario usuarioidusuario1) {
+        this.usuarioidusuario1 = usuarioidusuario1;
     }
 
     @Override
@@ -158,7 +159,7 @@ public class Etiqueta implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Etiqueta[ idEtiqueta=" + idEtiqueta + " ]";
+        return "model.Etiqueta[ idEtiqueta=" + idEtiqueta + " ]";
     }
     
 }
