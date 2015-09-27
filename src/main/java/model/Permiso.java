@@ -10,7 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -41,12 +40,12 @@ public class Permiso implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "permiso_imagen")
     private String permisoImagen;
-    @JoinColumn(name = "Foto_id_imagen", referencedColumnName = "id_imagen", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Imagen imagen;
     @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false)
     private Usuario usuario;
+    @JoinColumn(name = "Foto_id_imagen", referencedColumnName = "id_imagen", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Imagen imagen;
 
     public Permiso() {
     }
@@ -80,20 +79,20 @@ public class Permiso implements Serializable {
         this.permisoImagen = permisoImagen;
     }
 
-    public Imagen getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(Imagen imagen) {
-        this.imagen = imagen;
-    }
-
     public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Imagen getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Imagen imagen) {
+        this.imagen = imagen;
     }
 
     @Override
@@ -118,7 +117,7 @@ public class Permiso implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Permiso[ permisoPK=" + permisoPK + " ]";
+        return "entity.Permiso[ permisoPK=" + permisoPK + " ]";
     }
     
 }

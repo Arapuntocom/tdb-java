@@ -6,21 +6,16 @@
 package service;
 
 import ejb.TestUsuariosEJBLocal;
-import facade.AlbumFacadeLocal;
-import facade.UsuarioFacadeLocal;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import model.Album;
 import model.Usuario;
 
 /**
@@ -35,9 +30,6 @@ public class TestUsuariosService {
        
     @EJB
     TestUsuariosEJBLocal testUsuariosEJBLocal;
-    
-    @EJB
-    UsuarioFacadeLocal UsuarioFacadeLocal;
     
     @PUT
     @Path("{id}")
@@ -69,6 +61,5 @@ public class TestUsuariosService {
     public int countREST() {
         return testUsuariosEJBLocal.cantidad();
     }
-    
     
 }

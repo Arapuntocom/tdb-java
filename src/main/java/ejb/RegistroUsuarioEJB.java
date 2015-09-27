@@ -21,19 +21,16 @@ public class RegistroUsuarioEJB implements RegistroUsuarioEJBLocal {
     
     @EJB
     private UsuarioFacadeLocal usuarioFacade;    
-    
-    public RegistroUsuarioEJB() {
-       //logger.info("RegistroUsuarioEJB: ya me construi! =D");
-    }
-    
+        
     /**
      * agregamos un nuevo usuario a la bd.
      * @param usuarioPost
+     * @return 
      */                
     @Override
-    public void agregarUsuario(UsuarioRegistroPost usuarioPost){
-        logger.info("RegistroUsuarioEJB: inicia la creacion de usuario, con Objeto UsuarioRegistroPost.");
-        
+    public Usuario agregarUsuario(UsuarioRegistroPost usuarioPost){
+        logger.setLevel(Level.ALL);
+        logger.entering(this.getClass().getName(), "agregarUsuario", "UsuarioRegistroPost");        
         Usuario nuevo = new Usuario();
         
         nuevo.setEmailUsuario(usuarioPost.getEmail());     
@@ -48,82 +45,17 @@ public class RegistroUsuarioEJB implements RegistroUsuarioEJBLocal {
         
         nuevo.setIdUsuario(200);
         nuevo.setApellidoUsuario(usuarioPost.getApellido());
-        nuevo.setPaisUsuario(usuarioPost.getPais());
-        nuevo.setUsername(usuarioPost.getNombre_usuario());
-        
-        /*mostrando en el log los datos ingresados*/
-        logger.log(Level.INFO, "RegistroUsuarioEJB: id->\t\t{0}", nuevo.getIdUsuario());
-        logger.log(Level.INFO, "RegistroUsuarioEJB: pass->\t{0}", nuevo.getPassUsuario());
-        logger.log(Level.INFO, "RegistroUsuarioEJB: nombre->\t{0}", nuevo.getNombreUsuario());
-        logger.log(Level.INFO, "RegistroUsuarioEJB: apellido->\t{0}", nuevo.getApellidoUsuario());
-        logger.log(Level.INFO, "RegistroUsuarioEJB: email->\t{0}", nuevo.getEmailUsuario());
-        logger.log(Level.INFO, "RegistroUsuarioEJB: fono->\t{0}", nuevo.getNumeroMovilusuario());
-        logger.log(Level.INFO, "RegistroUsuarioEJB: nacimiento->\t{0}", nuevo.getFechaNacimientousuario());
-        logger.log(Level.INFO, "RegistroUsuarioEJB: genero->\t{0}", nuevo.getSexoUsuario());
-        logger.log(Level.INFO, "RegistroUsuarioEJB: pais->\t{0}", nuevo.getPaisUsuario());
-        logger.log(Level.INFO, "RegistroUsuarioEJB: username->\t{0}", nuevo.getUsername());
-        
-        if(!usuarioFacade.existeEmail(nuevo.getEmailUsuario()) && !usuarioFacade.existeUserName(nuevo.getUsername())){
-            
-            usuarioFacade.create(nuevo);
-            logger.log(Level.INFO, "RegistroUsuarioEJB: usuario creado, la cantidad de usuarios es: {0}", usuarioFacade.count());
-            
-        }else{
-           logger.severe("RegistroUsuarioEJB: No se ha podido registrar al nuevo usuario, el userName o el email ya se encuentra registrado");
-        }       
+        nuevo.setPaisUsuario(usuarioPost.getPais());        
                 
-    }    
-
-    @Override
-    public void agregarUsuario(String email, Integer pass, Integer pass2, String nombre, Integer dia, Integer mes, Integer year, String fono, String sexo, Integer id) {
-        logger.setLevel(Level.ALL);
-        
-        logger.entering(RegistroUsuarioEJB.class.getName(),"agregarUsuario");
-        
-        logger.info("RegistroUsuarioEJB: inicia la creacion de usuario, por datos.");
-        
-        Usuario nuevo = new Usuario();
-        logger.info("RegistroUsuarioEJB: instancia a un nuevo Usuario");
-        
-        nuevo.setApellidoUsuario("apellido1");
-        nuevo.setEmailUsuario(email);
-        nuevo.setPassUsuario(""+pass);
-        GregorianCalendar c = new GregorianCalendar(year, mes-1, dia);
-        Date nacimiento = new Date(c.getTimeInMillis());       
-        nuevo.setFechaNacimientousuario(nacimiento);
-        nuevo.setNombreUsuario(nombre);
-        nuevo.setNumeroMovilusuario(""+fono);
-        nuevo.setPaisUsuario("Chilito");
-        nuevo.setSexoUsuario(sexo);
-        nuevo.setIdUsuario(id);
-        nuevo.setUsername("userNameDefault");
-        
-        if(nuevo.getSexoUsuario()==null){
-            nuevo.setSexoUsuario("indefinidoDefault");
-        }
-        
-        /*mostrando en el log los datos ingresados*/
-        logger.log(Level.INFO, "se muestra finest->{0}", logger.isLoggable(Level.FINEST));
-        
-        logger.log(Level.FINEST, "RegistroUsuarioEJB: id->\t\t{0}", nuevo.getIdUsuario());
-        logger.log(Level.FINEST, "RegistroUsuarioEJB: pass->\t{0}", nuevo.getPassUsuario());
-        logger.log(Level.FINEST, "RegistroUsuarioEJB: nombre->\t{0}", nuevo.getNombreUsuario());
-        logger.log(Level.FINEST, "RegistroUsuarioEJB: apellido->\t{0}", nuevo.getApellidoUsuario());
-        logger.log(Level.FINEST, "RegistroUsuarioEJB: email->\t{0}", nuevo.getEmailUsuario());
-        logger.log(Level.FINEST, "RegistroUsuarioEJB: fono->\t{0}", nuevo.getNumeroMovilusuario());
-        logger.log(Level.FINEST, "RegistroUsuarioEJB: nacimiento->\t{0}", nuevo.getFechaNacimientousuario());
-        logger.log(Level.FINEST, "RegistroUsuarioEJB: genero->\t{0}", nuevo.getSexoUsuario());
-        logger.log(Level.FINEST, "RegistroUsuarioEJB: pa\u00eds->\t{0}", nuevo.getPaisUsuario());
-        
-        if(!usuarioFacade.existeEmail(nuevo.getEmailUsuario()) && !usuarioFacade.existeUserName(nuevo.getUsername())){
-            
+        if(!usuarioFacade.existeEmail(nuevo.getEmailUsuario()) && !usuarioFacade.existeUserName(nuevo.getUsername())){            
             usuarioFacade.create(nuevo);
-            logger.log(Level.INFO, "RegistroUsuarioEJB: usuario creado, la cantidad de usuarios es: {0}", usuarioFacade.count());
-            
+            logger.exiting(this.getClass().getName(), "agregarUsuario", "(a persistencia)");
+            return nuevo;
         }else{
-           logger.severe("RegistroUsuarioEJB: No se ha podido registrar al nuevo usuario, el userName o el email ya se encuentra registrado");
-        }   
-        logger.exiting(RegistroUsuarioEJB.class.getName(),"agregarUsuario");
-    }   
+            logger.severe("RegistroUsuarioEJB: No se ha podido registrar al nuevo usuario, el userName o el email ya se encuentra registrado");
+            logger.exiting(this.getClass().getName(), "agregarUsuario", "usuario o email ya registrado");
+            return null;
+        }         
+    }    
     
 }

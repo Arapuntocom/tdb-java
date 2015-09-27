@@ -5,10 +5,10 @@
  */
 package facade;
 
+import model.Permiso;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import model.Permiso;
 
 /**
  *
@@ -16,7 +16,7 @@ import model.Permiso;
  */
 @Stateless
 public class PermisoFacade extends AbstractFacade<Permiso> implements PermisoFacadeLocal {
-    @PersistenceContext(unitName = "alfa2PU")
+    @PersistenceContext(unitName = "help-tdb-ejbPU")
     private EntityManager em;
 
     @Override

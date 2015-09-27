@@ -37,7 +37,6 @@ public class InicioSesionEJB implements InicioSesionEJBLocal{
         }else{
             logger.exiting(this.getClass().getName(), "iniciarSesion", "Usuario NO encontrado");
             return null;
-        } 
-        
+        }       
     }
 }

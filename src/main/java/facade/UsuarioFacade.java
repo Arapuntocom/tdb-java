@@ -5,9 +5,11 @@
  */
 package facade;
 
+import static facade.AbstractFacade.logger;
 import java.util.List;
+import java.util.logging.Level;
+import model.Usuario;
 import javax.ejb.Stateless;
-
 import javax.persistence.EntityManager;
 import javax.persistence.LockTimeoutException;
 import javax.persistence.NoResultException;
@@ -18,7 +20,6 @@ import javax.persistence.PessimisticLockException;
 import javax.persistence.Query;
 import javax.persistence.QueryTimeoutException;
 import javax.persistence.TransactionRequiredException;
-import model.Usuario;
 
 /**
  *
@@ -26,8 +27,8 @@ import model.Usuario;
  */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFacadeLocal {
-    @PersistenceContext(unitName = "alfa2PU")
-    private EntityManager em;
+    @PersistenceContext(unitName = "help-tdb-ejbPU")
+    private EntityManager em;   
 
     @Override
     protected EntityManager getEntityManager() {
@@ -37,97 +38,11 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     public UsuarioFacade() {
         super(Usuario.class);
     }
-    
-    /*
-    Esta funcion comprueba si el email ingresado en el parametro se encuentra
-    en la base de datos.
-    En caso de que el email se encuentre, retorna verdadero.
-    */
+
     @Override
-    public boolean existeEmail(String email){
-        List<Usuario> list = null;
-        try{
-            Query qq = (Query) em.createNamedQuery("Usuario.findByEmailUsuario", Usuario.class).setParameter("emailUsuario", email);
-            list = qq.getResultList();
-            if(list != null){
-                if(list.isEmpty()){
-                    logger.info("no se encontro ningún usuario con ese email");
-                    return false;
-                }else{
-                    logger.info("ya existe(n) usuario(s) con ese email, cantidad="+list.size());
-                    return true;
-                }
-            }
-        }catch(IllegalArgumentException e){
-            logger.severe("el nombre o el parametro de la Query no existe -> "+e);
-        }catch(IllegalStateException e){
-            logger.severe("ocurrio un problema con la consulta -> "+e);
-        }
-        catch(QueryTimeoutException e){
-            logger.severe("ocurrio un problema con la consulta -> "+e);
-        }
-        catch(TransactionRequiredException e){
-            logger.severe("ocurrio un problema con la consulta -> "+e);
-        }
-        catch(PessimisticLockException e){
-            logger.severe("ocurrio un problema con la consulta -> "+e);
-        }
-        catch(LockTimeoutException e){
-            logger.severe("ocurrio un problema con la consulta -> "+e);
-        }
-        catch(PersistenceException e){
-            logger.severe("ocurrio un problema con la consulta -> "+e);
-        }                
-        return !list.isEmpty();
-    }
-    
-    
-    /*
-    Esta funcion comprueba si el user name ingresado en el parametro se encuentra
-    en la base de datos.
-    En caso de que el user name se encuentre, retorna verdadero.
-    */
-    @Override
-    public boolean existeUserName(String username){
-        List<Usuario> list = null;
-        try{
-            Query qq = (Query) em.createNamedQuery("Usuario.findByUsername", Usuario.class).setParameter("username", username);
-            list = qq.getResultList();
-            if(list != null){
-                if(list.isEmpty()){
-                    logger.info("no se encontro ningún usuario con ese username");
-                    return false;
-                }else{
-                    logger.info("ya existe(n) usuario(s) con ese username, cantidad="+list.size());
-                    return true;
-                }
-            }
-        }catch(IllegalArgumentException e){
-            logger.severe("el nombre o el parametro de la Query no existe -> "+e);
-        }catch(IllegalStateException e){
-            logger.severe("ocurrio un problema con la consulta -> "+e);
-        }
-        catch(QueryTimeoutException e){
-            logger.severe("ocurrio un problema con la consulta -> "+e);
-        }
-        catch(TransactionRequiredException e){
-            logger.severe("ocurrio un problema con la consulta -> "+e);
-        }
-        catch(PessimisticLockException e){
-            logger.severe("ocurrio un problema con la consulta -> "+e);
-        }
-        catch(LockTimeoutException e){
-            logger.severe("ocurrio un problema con la consulta -> "+e);
-        }
-        catch(PersistenceException e){
-            logger.severe("ocurrio un problema con la consulta -> "+e);
-        }                
-        return !list.isEmpty();
-    }
-        
-    @Override
-    public Usuario getUsuario(String userName, String pass){
-        
+    public Usuario getUsuario(String userName, String pass) {
+        logger.setLevel(Level.ALL);
+        logger.entering(this.getClass().getName(), "getUsuario", "user: "+userName+"pass: "+pass);
         Usuario usuario = null;
         try{
             Query qq = (Query) em.createNamedQuery("Usuario.findby userName and pass", Usuario.class).setParameter("username", userName).setParameter("passUsuario", pass);
@@ -161,11 +76,102 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         }     
         
         if(usuario == null){
-                logger.info("No se encuentra usuario y contrasenha indicados");
-                return null;
+            logger.exiting(this.getClass().getName(), "getUsuario", null);
+            return null;
         }else{
-            logger.info("Se retorna el usuario de id->"+usuario.getIdUsuario());
+            logger.exiting(this.getClass().getName(), "getUsuario", usuario.toString());
             return usuario;
         }
-    }    
+    }
+
+    @Override
+    public boolean existeEmail(String emailUsuario) {
+        logger.setLevel(Level.ALL);
+        logger.entering(this.getClass().getName(), "existeEmail", emailUsuario);
+        List<Usuario> list = null;
+        try{
+            Query qq = (Query) em.createNamedQuery("Usuario.findByEmailUsuario", Usuario.class).setParameter("emailUsuario", emailUsuario);
+            list = qq.getResultList();
+            
+        }catch(IllegalArgumentException e){
+            logger.severe("el nombre o el parametro de la Query no existe -> "+e);
+        }catch(IllegalStateException e){
+            logger.severe("ocurrio un problema con la consulta -> "+e);
+        }
+        catch(QueryTimeoutException e){
+            logger.severe("ocurrio un problema con la consulta -> "+e);
+        }
+        catch(TransactionRequiredException e){
+            logger.severe("ocurrio un problema con la consulta -> "+e);
+        }
+        catch(PessimisticLockException e){
+            logger.severe("ocurrio un problema con la consulta -> "+e);
+        }
+        catch(LockTimeoutException e){
+            logger.severe("ocurrio un problema con la consulta -> "+e);
+        }
+        catch(PersistenceException e){
+            logger.severe("ocurrio un problema con la consulta -> "+e);
+        }      
+        
+        if(list != null){
+                if(list.isEmpty()){
+                    logger.exiting(this.getClass().getName(), "existeEmail", false);
+                    return false;
+                }else{
+                    logger.exiting(this.getClass().getName(), "existeEmail", true);
+                    return true;
+                }
+        }
+        else{
+            logger.exiting(this.getClass().getName(), "existeEmail", "falla en la consulta (true)");
+            return true;
+        }
+    }
+
+    @Override
+    public boolean existeUserName(String username) {
+        logger.setLevel(Level.ALL);
+        logger.entering(this.getClass().getName(), "existeUserName", username);
+        List<Usuario> list = null;
+        try{
+            Query qq = (Query) em.createNamedQuery("Usuario.findByUsername", Usuario.class).setParameter("username", username);
+            list = qq.getResultList();
+            
+        }catch(IllegalArgumentException e){
+            logger.severe("el nombre o el parametro de la Query no existe -> "+e);
+        }catch(IllegalStateException e){
+            logger.severe("ocurrio un problema con la consulta -> "+e);
+        }
+        catch(QueryTimeoutException e){
+            logger.severe("ocurrio un problema con la consulta -> "+e);
+        }
+        catch(TransactionRequiredException e){
+            logger.severe("ocurrio un problema con la consulta -> "+e);
+        }
+        catch(PessimisticLockException e){
+            logger.severe("ocurrio un problema con la consulta -> "+e);
+        }
+        catch(LockTimeoutException e){
+            logger.severe("ocurrio un problema con la consulta -> "+e);
+        }
+        catch(PersistenceException e){
+            logger.severe("ocurrio un problema con la consulta -> "+e);
+        }      
+        
+        if(list != null){
+                if(list.isEmpty()){
+                    logger.exiting(this.getClass().getName(), "existeUserName", false);
+                    return false;
+                }else{
+                    logger.exiting(this.getClass().getName(), "existeUserName", true);
+                    return true;
+                }
+        }
+        else{
+            logger.exiting(this.getClass().getName(), "existeUserName", "falla en la consulta (true)");
+            return true;
+        }
+    }
+    
 }

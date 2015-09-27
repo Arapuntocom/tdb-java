@@ -11,7 +11,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -69,13 +68,13 @@ public class Album implements Serializable {
     @Column(name = "privacidad_album")
     private String privacidadAlbum;
     @JoinTable(name = "album_has_imagen", joinColumns = {
-        @JoinColumn(name = "Album_id_album", referencedColumnName = "id_album")}, inverseJoinColumns = {
-        @JoinColumn(name = "Imagen_id_imagen", referencedColumnName = "id_imagen")})
-    @ManyToMany(fetch = FetchType.EAGER)
+        @JoinColumn(name = "id_album", referencedColumnName = "id_album")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_imagen", referencedColumnName = "id_imagen")})
+    @ManyToMany
     private List<Imagen> imagenList;
-    @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Usuario usuarioidusuario;
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+    @ManyToOne(optional = false)
+    private Usuario idUsuario;
 
     public Album() {
     }
@@ -140,12 +139,12 @@ public class Album implements Serializable {
         this.imagenList = imagenList;
     }
 
-    public Usuario getUsuarioidusuario() {
-        return usuarioidusuario;
+    public Usuario getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setUsuarioidusuario(Usuario usuarioidusuario) {
-        this.usuarioidusuario = usuarioidusuario;
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     @Override
@@ -170,7 +169,7 @@ public class Album implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Album[ idAlbum=" + idAlbum + " ]";
+        return "entity.Album[ idAlbum=" + idAlbum + " ]";
     }
     
 }

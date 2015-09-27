@@ -5,7 +5,7 @@
  */
 package facade;
 
-import model.Tag;
+import model.Auditoria;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author Aracelly
  */
 @Local
-public interface TagFacadeLocal {
+public interface AuditoriaFacadeLocal {
 
-    void create(Tag tag);
+    void create(Auditoria auditoria);
 
-    void edit(Tag tag);
+    void edit(Auditoria auditoria);
 
-    void remove(Tag tag);
+    void remove(Auditoria auditoria);
 
-    Tag find(Object id);
+    Auditoria find(Object id);
 
-    List<Tag> findAll();
+    List<Auditoria> findAll();
 
-    List<Tag> findRange(int[] range);
+    List<Auditoria> findRange(int[] range);
 
     int count();
     

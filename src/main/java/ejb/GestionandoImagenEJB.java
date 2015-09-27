@@ -11,7 +11,6 @@ import facade.UsuarioFacadeLocal;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-//import java.time.Instant;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -34,6 +33,7 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
 
     static final Logger logger = Logger.getLogger(GestionandoImagenEJB.class.getName());
 
+
     @EJB
     private ImagenFacadeLocal imagenFacadeLocal;
 
@@ -45,6 +45,7 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
     
     @EJB
     private ComentarioFacadeLocal comentarioFacadeLocal;
+
 
     @Override
     public void editImagen(Imagen imagen) {
@@ -71,7 +72,6 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
     public void createImagen(Imagen imagen) {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().toString(), "createImagen(imagen)");
-        //agregar clasificacion.
         imagenFacadeLocal.create(imagen);
         logger.exiting(this.getClass().toString(), "createImagen(imagen)");
     }
@@ -214,6 +214,9 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
     public List<Comentario> agregarComentario(Comentario comentario) {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "agregarComentario");
+        GregorianCalendar gc = new GregorianCalendar();
+        Date fechaActual = new Date();
+        fechaActual.setTime(gc.getTimeInMillis());        
         int clasificacion = 69;
         /*try {
         clasificacion = clasificadorWekaLocal.clasificar(comentario.getTextoComentario());
@@ -221,11 +224,7 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
         Logger.getLogger(GestionandoImagenEJB.class.getName()).log(Level.SEVERE, "Error, no se pudo clasificar ", ex);
         }*/
         Imagen imagen = imagenFacadeLocal.find(comentario.getIdComentario());   // en ese campo viene el id de la imagen
-        Usuario usuarioComentante = usuarioFacadeLocal.find(comentario.getClasificacionComentario());
-
-        GregorianCalendar gc = new GregorianCalendar();
-        Date fechaActual = new Date();
-        fechaActual.setTime(gc.getTimeInMillis());
+        Usuario usuarioComentante = usuarioFacadeLocal.find(comentario.getClasificacionComentario());        
 
         if (imagen != null && usuarioComentante != null) {
             Comentario nuevo = new Comentario();
@@ -238,16 +237,15 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
             
             comentarioFacadeLocal.create(nuevo);
             
-            List<Comentario> comentarios = imagen.getComentarioList();
+            List<Comentario> comentarios = imagen.getComentarioList();           
             
-            
-            logger.exiting(this.getClass().getName(), "agregarComentario", comentarios.size());
+            logger.exiting(this.getClass().getName(), "agregarComentario", "(comentario a persistencia)");
             return comentarios;
         }
         else{
             logger.exiting(this.getClass().getName(), "agregarComentario", "No se pudo agregar el comentario");
             return null;
         }
-        
     }
-}
+
+}  

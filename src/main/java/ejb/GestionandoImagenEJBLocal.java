@@ -22,8 +22,6 @@ import model.Tag;
 @Local
 public interface GestionandoImagenEJBLocal {
 
-   // public void agregarComentario(Comentario comentario);
-
     public void editImagen(Imagen imagen);
 
     public Imagen getImagen(Integer id);

@@ -19,13 +19,13 @@ import javax.persistence.TransactionRequiredException;
 public abstract class AbstractFacade<T> {
     private Class<T> entityClass;
 
-    static final Logger logger = Logger.getLogger(AbstractFacade.class.getName());
-    
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
     protected abstract EntityManager getEntityManager();
+    
+    static final Logger logger = Logger.getLogger(AbstractFacade.class.getName());
 
     public void create(T entity) {
         logger.setLevel(Level.ALL);
@@ -33,9 +33,9 @@ public abstract class AbstractFacade<T> {
         try{
             getEntityManager().persist(entity);
         }catch(EntityExistsException e){
-            logger.log(Level.SEVERE,"La entidad ya existe.");
+            logger.log(Level.SEVERE,"La entidad ya existe -> "+e);
         }catch(IllegalArgumentException e){
-            logger.log(Level.SEVERE,"La instancia no es una entidad.");
+            logger.log(Level.SEVERE,"La instancia no es una entidad -> "+e);
         }catch(TransactionRequiredException e){
             logger.log(Level.SEVERE,"Ocurrio un error con la persistencia -> "+e);
         }

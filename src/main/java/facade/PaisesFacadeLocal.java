@@ -5,7 +5,7 @@
  */
 package facade;
 
-import model.Tag;
+import model.Paises;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author Aracelly
  */
 @Local
-public interface TagFacadeLocal {
+public interface PaisesFacadeLocal {
 
-    void create(Tag tag);
+    void create(Paises paises);
 
-    void edit(Tag tag);
+    void edit(Paises paises);
 
-    void remove(Tag tag);
+    void remove(Paises paises);
 
-    Tag find(Object id);
+    Paises find(Object id);
 
-    List<Tag> findAll();
+    List<Paises> findAll();
 
-    List<Tag> findRange(int[] range);
+    List<Paises> findRange(int[] range);
 
     int count();
     
