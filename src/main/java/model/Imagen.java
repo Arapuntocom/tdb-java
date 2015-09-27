@@ -12,7 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,7 +47,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Imagen.findByPathImagen", query = "SELECT i FROM Imagen i WHERE i.pathImagen = :pathImagen"),
     @NamedQuery(name = "Imagen.findByPathMetadatosimagen", query = "SELECT i FROM Imagen i WHERE i.pathMetadatosimagen = :pathMetadatosimagen"),
     @NamedQuery(name = "Imagen.findByFechaImagen", query = "SELECT i FROM Imagen i WHERE i.fechaImagen = :fechaImagen"),
-    @NamedQuery(name = "Imagen.findByLicenciaImagen", query = "SELECT i FROM Imagen i WHERE i.licenciaImagen = :licenciaImagen")})
+    @NamedQuery(name = "Imagen.findByLicenciaImagen", query = "SELECT i FROM Imagen i WHERE i.licenciaImagen = :licenciaImagen"),
+    @NamedQuery(name = "Imagen.findByVecesFavorita", query = "SELECT i FROM Imagen i WHERE i.vecesFavorita = :vecesFavorita")})
 public class Imagen implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -69,7 +69,7 @@ public class Imagen implements Serializable {
     private String descripcionImagen;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 60)
     @Column(name = "path_imagen")
     private String pathImagen;
     @Basic(optional = false)
@@ -84,32 +84,32 @@ public class Imagen implements Serializable {
     private Date fechaImagen;
     @Lob
     @Column(name = "geo_imagen")
-    private String geoImagen;
+    private byte[] geoImagen;
     @Size(max = 45)
     @Column(name = "licencia_imagen")
     private String licenciaImagen;
+    @Column(name = "veces_favorita")
+    private Integer vecesFavorita;
+    @ManyToMany(mappedBy = "imagenList")
+    private List<Album> albumList;
     @JoinTable(name = "imagen_has_tag", joinColumns = {
         @JoinColumn(name = "Imagen_id_imagen", referencedColumnName = "id_imagen")}, inverseJoinColumns = {
         @JoinColumn(name = "Tag_id_tag", referencedColumnName = "id_tag")})
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     private List<Tag> tagList;
-    @ManyToMany(mappedBy = "imagenList", fetch = FetchType.EAGER)
-    private List<Album> albumList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "imagenidimagen", fetch = FetchType.EAGER)
-    private List<Etiqueta> etiquetaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "imagenidimagen", fetch = FetchType.EAGER)
-    private List<Favorito> favoritoList;
-    @JoinColumn(name = "Camara_id_camara", referencedColumnName = "id_camara")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Camara camaraidcamara;
-    @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Usuario usuarioidusuario;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "imagen", fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+    @ManyToOne(optional = false)
+    private Usuario idUsuario;
+    @JoinColumn(name = "id_camara", referencedColumnName = "id_camara")
+    @ManyToOne(optional = false)
+    private Camara idCamara;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "imagen")
     private List<Permiso> permisoList;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "imagenidimagen", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idImagen")
+    private List<Favorito> favoritoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "imagenidimagen")
+    private List<Etiqueta> etiquetaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "imagenidimagen")
     private List<Comentario> comentarioList;
 
     public Imagen() {
@@ -184,11 +184,11 @@ public class Imagen implements Serializable {
         this.fechaImagen = fechaImagen;
     }
 
-    public String getGeoImagen() {
+    public byte[] getGeoImagen() {
         return geoImagen;
     }
 
-    public void setGeoImagen(String geoImagen) {
+    public void setGeoImagen(byte[] geoImagen) {
         this.geoImagen = geoImagen;
     }
 
@@ -200,13 +200,12 @@ public class Imagen implements Serializable {
         this.licenciaImagen = licenciaImagen;
     }
 
-    @XmlTransient
-    public List<Tag> getTagList() {
-        return tagList;
+    public Integer getVecesFavorita() {
+        return vecesFavorita;
     }
 
-    public void setTagList(List<Tag> tagList) {
-        this.tagList = tagList;
+    public void setVecesFavorita(Integer vecesFavorita) {
+        this.vecesFavorita = vecesFavorita;
     }
 
     @XmlTransient
@@ -219,12 +218,37 @@ public class Imagen implements Serializable {
     }
 
     @XmlTransient
-    public List<Etiqueta> getEtiquetaList() {
-        return etiquetaList;
+    public List<Tag> getTagList() {
+        return tagList;
     }
 
-    public void setEtiquetaList(List<Etiqueta> etiquetaList) {
-        this.etiquetaList = etiquetaList;
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
+    }
+
+    public Usuario getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Camara getIdCamara() {
+        return idCamara;
+    }
+
+    public void setIdCamara(Camara idCamara) {
+        this.idCamara = idCamara;
+    }
+
+    @XmlTransient
+    public List<Permiso> getPermisoList() {
+        return permisoList;
+    }
+
+    public void setPermisoList(List<Permiso> permisoList) {
+        this.permisoList = permisoList;
     }
 
     @XmlTransient
@@ -236,29 +260,13 @@ public class Imagen implements Serializable {
         this.favoritoList = favoritoList;
     }
 
-    public Camara getCamaraidcamara() {
-        return camaraidcamara;
-    }
-
-    public void setCamaraidcamara(Camara camaraidcamara) {
-        this.camaraidcamara = camaraidcamara;
-    }
-
-    public Usuario getUsuarioidusuario() {
-        return usuarioidusuario;
-    }
-
-    public void setUsuarioidusuario(Usuario usuarioidusuario) {
-        this.usuarioidusuario = usuarioidusuario;
-    }
-
     @XmlTransient
-    public List<Permiso> getPermisoList() {
-        return permisoList;
+    public List<Etiqueta> getEtiquetaList() {
+        return etiquetaList;
     }
 
-    public void setPermisoList(List<Permiso> permisoList) {
-        this.permisoList = permisoList;
+    public void setEtiquetaList(List<Etiqueta> etiquetaList) {
+        this.etiquetaList = etiquetaList;
     }
 
     @XmlTransient
@@ -292,7 +300,7 @@ public class Imagen implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Imagen[ idImagen=" + idImagen + " ]";
+        return "entity.Imagen[ idImagen=" + idImagen + " ]";
     }
     
 }

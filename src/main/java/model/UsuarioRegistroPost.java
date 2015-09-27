@@ -13,8 +13,11 @@ public class UsuarioRegistroPost {
     private String email;
     private String pass;
     private String nombre;
+    private String apellido;
     private String fono;
     private String sexo;
+    private String pais;
+    private String nombre_usuario;
     private int year;
     private int mes;
     private int dia;
@@ -22,6 +25,31 @@ public class UsuarioRegistroPost {
     public UsuarioRegistroPost() {
     }
 
+    public String getNombre_usuario() {
+        return nombre_usuario;
+    }
+
+    public void setNombre_usuario(String nombre_usuario) {
+        this.nombre_usuario = nombre_usuario;
+    }
+    
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    
     public String getEmail() {
         return email;
     }

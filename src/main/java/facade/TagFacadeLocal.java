@@ -5,9 +5,9 @@
  */
 package facade;
 
+import model.Tag;
 import java.util.List;
 import javax.ejb.Local;
-import model.Tag;
 
 /**
  *

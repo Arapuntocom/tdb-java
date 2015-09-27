@@ -76,7 +76,7 @@ public class PermisoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "model.PermisoPK[ usuarioidusuario=" + usuarioidusuario + ", fotoidimagen=" + fotoidimagen + " ]";
+        return "entity.PermisoPK[ usuarioidusuario=" + usuarioidusuario + ", fotoidimagen=" + fotoidimagen + " ]";
     }
     
 }

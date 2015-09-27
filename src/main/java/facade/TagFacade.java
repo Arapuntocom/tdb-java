@@ -5,10 +5,10 @@
  */
 package facade;
 
+import model.Tag;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import model.Tag;
 
 /**
  *
@@ -16,7 +16,7 @@ import model.Tag;
  */
 @Stateless
 public class TagFacade extends AbstractFacade<Tag> implements TagFacadeLocal {
-    @PersistenceContext(unitName = "alfa2PU")
+    @PersistenceContext(unitName = "help-tdb-ejbPU")
     private EntityManager em;
 
     @Override

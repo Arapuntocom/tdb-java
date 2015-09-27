@@ -5,10 +5,10 @@
  */
 package facade;
 
+import model.Album;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import model.Album;
 
 /**
  *
@@ -16,7 +16,7 @@ import model.Album;
  */
 @Stateless
 public class AlbumFacade extends AbstractFacade<Album> implements AlbumFacadeLocal {
-    @PersistenceContext(unitName = "alfa2PU")
+    @PersistenceContext(unitName = "help-tdb-ejbPU")
     private EntityManager em;
 
     @Override

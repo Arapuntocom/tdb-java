@@ -5,10 +5,10 @@
  */
 package facade;
 
+import model.Favorito;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import model.Favorito;
 
 /**
  *
@@ -16,7 +16,7 @@ import model.Favorito;
  */
 @Stateless
 public class FavoritoFacade extends AbstractFacade<Favorito> implements FavoritoFacadeLocal {
-    @PersistenceContext(unitName = "alfa2PU")
+    @PersistenceContext(unitName = "help-tdb-ejbPU")
     private EntityManager em;
 
     @Override

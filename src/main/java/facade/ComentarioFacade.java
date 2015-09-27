@@ -5,10 +5,10 @@
  */
 package facade;
 
+import model.Comentario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import model.Comentario;
 
 /**
  *
@@ -16,7 +16,7 @@ import model.Comentario;
  */
 @Stateless
 public class ComentarioFacade extends AbstractFacade<Comentario> implements ComentarioFacadeLocal {
-    @PersistenceContext(unitName = "alfa2PU")
+    @PersistenceContext(unitName = "help-tdb-ejbPU")
     private EntityManager em;
 
     @Override

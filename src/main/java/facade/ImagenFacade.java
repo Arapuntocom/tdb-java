@@ -5,10 +5,10 @@
  */
 package facade;
 
+import model.Imagen;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import model.Imagen;
 
 /**
  *
@@ -16,7 +16,7 @@ import model.Imagen;
  */
 @Stateless
 public class ImagenFacade extends AbstractFacade<Imagen> implements ImagenFacadeLocal {
-    @PersistenceContext(unitName = "alfa2PU")
+    @PersistenceContext(unitName = "help-tdb-ejbPU")
     private EntityManager em;
 
     @Override

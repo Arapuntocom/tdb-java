@@ -11,7 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Camara.findAll", query = "SELECT c FROM Camara c"),
     @NamedQuery(name = "Camara.findByIdCamara", query = "SELECT c FROM Camara c WHERE c.idCamara = :idCamara"),
     @NamedQuery(name = "Camara.findByMarcaCamara", query = "SELECT c FROM Camara c WHERE c.marcaCamara = :marcaCamara"),
-    @NamedQuery(name = "Camara.findByModeloCamara", query = "SELECT c FROM Camara c WHERE c.modeloCamara = :modeloCamara")})
+    @NamedQuery(name = "Camara.findByModeloCamara", query = "SELECT c FROM Camara c WHERE c.modeloCamara = :modeloCamara"),
+    @NamedQuery(name = "Camara.findByCantidadfotos", query = "SELECT c FROM Camara c WHERE c.cantidadfotos = :cantidadfotos")})
 public class Camara implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,7 +48,9 @@ public class Camara implements Serializable {
     @Size(max = 45)
     @Column(name = "modelo_camara")
     private String modeloCamara;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "camaraidcamara", fetch = FetchType.EAGER)
+    @Column(name = "cantidadfotos")
+    private Integer cantidadfotos;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCamara")
     private List<Imagen> imagenList;
 
     public Camara() {
@@ -82,6 +84,14 @@ public class Camara implements Serializable {
         this.modeloCamara = modeloCamara;
     }
 
+    public Integer getCantidadfotos() {
+        return cantidadfotos;
+    }
+
+    public void setCantidadfotos(Integer cantidadfotos) {
+        this.cantidadfotos = cantidadfotos;
+    }
+
     @XmlTransient
     public List<Imagen> getImagenList() {
         return imagenList;
@@ -113,7 +123,7 @@ public class Camara implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Camara[ idCamara=" + idCamara + " ]";
+        return "entity.Camara[ idCamara=" + idCamara + " ]";
     }
     
 }
