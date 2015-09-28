@@ -5,6 +5,8 @@
  */
 package ejb;
 
+import facade.AlbumFacadeLocal;
+import facade.CamaraFacadeLocal;
 import facade.ComentarioFacadeLocal;
 import facade.ImagenFacadeLocal;
 import facade.UsuarioFacadeLocal;
@@ -16,6 +18,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import model.Album;
+import model.Camara;
 import model.Comentario;
 import model.Etiqueta;
 import model.Favorito;
@@ -33,7 +36,6 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
 
     static final Logger logger = Logger.getLogger(GestionandoImagenEJB.class.getName());
 
-
     @EJB
     private ImagenFacadeLocal imagenFacadeLocal;
 
@@ -42,10 +44,15 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
 
     @EJB
     private ClasificadorWekaLocal clasificadorWekaLocal;
-    
+
     @EJB
     private ComentarioFacadeLocal comentarioFacadeLocal;
-
+    
+    @EJB 
+    private CamaraFacadeLocal camaraFacadeLocal;
+    
+    @EJB
+    private AlbumFacadeLocal AlbumFacadeLocal;
 
     @Override
     public void editImagen(Imagen imagen) {
@@ -61,10 +68,11 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
         logger.entering(this.getClass().toString(), "getImagen(id)");
         Imagen retorno = null;
         retorno = imagenFacadeLocal.find(id);
-        if(retorno != null)
+        if (retorno != null) {
             logger.exiting(this.getClass().toString(), "getImagen(id)", retorno.toString());
-        else
-            logger.exiting(this.getClass().toString(), "getImagen(id)", "No se encuentra imagen "+id);
+        } else {
+            logger.exiting(this.getClass().toString(), "getImagen(id)", "No se encuentra imagen " + id);
+        }
         return retorno;
     }
 
@@ -72,8 +80,32 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
     public void createImagen(Imagen imagen) {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().toString(), "createImagen(imagen)");
-        imagenFacadeLocal.create(imagen);
-        logger.exiting(this.getClass().toString(), "createImagen(imagen)");
+        GregorianCalendar gc = new GregorianCalendar();
+        Date fechaActual = new Date();
+        fechaActual.setTime(gc.getTimeInMillis());
+        Camara camara = camaraFacadeLocal.find(imagen.getIdCamara());
+        Usuario usuario = usuarioFacadeLocal.find(imagen.getIdUsuario());
+        if(camara != null && usuario != null){
+            Imagen nueva = new Imagen();
+            nueva.setAnchoImagen(imagen.getAnchoImagen());
+            nueva.setDescripcionImagen(imagen.getDescripcionImagen());
+            nueva.setFechaImagen(fechaActual);
+            nueva.setGeoImagen(imagen.getGeoImagen());        
+            nueva.setIdCamara(camara);
+            nueva.setIdImagen(Integer.MIN_VALUE);
+            nueva.setIdUsuario(usuario);
+            nueva.setLargoImagen(imagen.getLargoImagen());
+            nueva.setLicenciaImagen(imagen.getLicenciaImagen());
+            nueva.setPathImagen("C:/xampp/htdocs/PrimeraEntregaTBDAngularJS/img/"+imagenFacadeLocal.count()+1+".jpg");
+            nueva.setPathMetadatosimagen("C:/xampp/htdocs/PrimeraEntregaTBDAngularJS/img/"+imagenFacadeLocal.count()+1+".jpg");
+            nueva.setVecesFavorita(0);
+            imagenFacadeLocal.create(imagen);
+            
+            logger.exiting(this.getClass().getName(), "createImagen", "(a persistencia)");
+        }
+        else{
+            logger.exiting(this.getClass().getName(), "createImagen", "(no se pudo agregar la imagen)");
+        }       
     }
 
     @Override
@@ -209,22 +241,22 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
         logger.exiting(this.getClass().getName(), "getAlbumesUsuario", idUsuario);
         return retorno;
     }
-       
+
     @Override
     public List<Comentario> agregarComentario(Comentario comentario) {
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "agregarComentario");
         GregorianCalendar gc = new GregorianCalendar();
         Date fechaActual = new Date();
-        fechaActual.setTime(gc.getTimeInMillis());        
+        fechaActual.setTime(gc.getTimeInMillis());
         int clasificacion = 69;
-        /*try {
-        clasificacion = clasificadorWekaLocal.clasificar(comentario.getTextoComentario());
+        try {
+            clasificacion = clasificadorWekaLocal.clasificar(comentario.getTextoComentario());
         } catch (Exception ex) {
-        Logger.getLogger(GestionandoImagenEJB.class.getName()).log(Level.SEVERE, "Error, no se pudo clasificar ", ex);
-        }*/
+            Logger.getLogger(GestionandoImagenEJB.class.getName()).log(Level.SEVERE, "Error, no se pudo clasificar: ", ex);
+        }
         Imagen imagen = imagenFacadeLocal.find(comentario.getIdComentario());   // en ese campo viene el id de la imagen
-        Usuario usuarioComentante = usuarioFacadeLocal.find(comentario.getClasificacionComentario());        
+        Usuario usuarioComentante = usuarioFacadeLocal.find(comentario.getClasificacionComentario());
 
         if (imagen != null && usuarioComentante != null) {
             Comentario nuevo = new Comentario();
@@ -234,18 +266,46 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
             nuevo.setImagenidimagen(imagen);
             nuevo.setTextoComentario(comentario.getTextoComentario());
             nuevo.setUsuarioidusuario(usuarioComentante);
-            
+
             comentarioFacadeLocal.create(nuevo);
-            
-            List<Comentario> comentarios = imagen.getComentarioList();           
-            
+
+            List<Comentario> comentarios = imagen.getComentarioList();
+
             logger.exiting(this.getClass().getName(), "agregarComentario", "(comentario a persistencia)");
             return comentarios;
-        }
-        else{
+        } else {
             logger.exiting(this.getClass().getName(), "agregarComentario", "No se pudo agregar el comentario");
             return null;
         }
     }
-
-}  
+    
+    @Override
+    public List<Album> crearAlbum(Album album){
+        logger.setLevel(Level.ALL);
+        logger.entering(this.getClass().getName(), "crearAlbum");
+        GregorianCalendar gc = new GregorianCalendar();
+        Date fechaActual = new Date();
+        fechaActual.setTime(gc.getTimeInMillis());
+        Usuario usuario = usuarioFacadeLocal.find(album.getIdUsuario()); //suponiendo que el campo idUsuario trae solo el id del usuario
+        if(usuario != null){
+            Album nuevo = new Album(); 
+            nuevo.setDescripcionAlbum(album.getDescripcionAlbum()); 
+            nuevo.setFechaCreacionalbum(fechaActual);
+            nuevo.setIdAlbum(Integer.MIN_VALUE);
+            nuevo.setIdUsuario(usuario);
+            nuevo.setNombreAlbum(album.getNombreAlbum());
+            nuevo.setPrivacidadAlbum(album.getPrivacidadAlbum());
+            
+            AlbumFacadeLocal.create(nuevo);
+            
+            List<Album> retorno = usuario.getAlbumList();
+            
+            logger.exiting(this.getClass().getName(), "crearAlbum", "(a persisitencia)");
+            return retorno;           
+        }
+        else{
+            logger.exiting(this.getClass().getName(), "crearAlbum", "No se pudo crear el album");
+            return null;
+        }
+    }
+}

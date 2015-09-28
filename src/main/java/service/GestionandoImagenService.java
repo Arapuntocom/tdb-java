@@ -271,9 +271,23 @@ public class GestionandoImagenService {
         logger.entering(this.getClass().getName(), "create", "comentante "+comentario.getClasificacionComentario()+", en la imagen "+comentario.getIdComentario());
         List<Comentario> retorno = gestionandoImagenEJBLocal.agregarComentario(comentario);
         if(retorno != null)
-            logger.exiting(this.getClass().getName(), "create(Comentario)", retorno);
+            logger.exiting(this.getClass().getName(), "create(Comentario)", retorno.size());
         else
             logger.exiting(this.getClass().getName(), "create(Comentario)", "Sin resultados");
+        return retorno;
+    }
+    
+    @POST
+    @Path("addAlbum")
+    @Consumes("application/json")
+    public List<Album> crearAlbum(Album album){
+        logger.setLevel(Level.ALL);
+        logger.entering(this.getClass().getName(), "crearAlbum");
+        List<Album> retorno = gestionandoImagenEJBLocal.crearAlbum(album);
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "crearAlbum", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "crearAlbum", "Sin resultados");
         return retorno;
     }
 }

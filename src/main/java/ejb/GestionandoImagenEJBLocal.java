@@ -43,4 +43,6 @@ public interface GestionandoImagenEJBLocal {
     public List<Album> getAlbumesUsuario(int idUsuario);
     
     public List<Comentario> agregarComentario(Comentario comentario);
+    
+    public List<Album> crearAlbum(Album album);
 }
