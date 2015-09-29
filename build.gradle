@@ -8,6 +8,7 @@ repositories {
         dirs 'clasificadorWeka'
         dirs 'clasificadorWeka/lib'
         dirs 'clasificadorWeka/resources'
+        dirs 'buscadorLucene'
     }    
 }
 	  
@@ -20,6 +21,10 @@ dependencies{
     compile name: 'google-collections'
     compile name: 'libsvm'
     compile name: 'weka'    
+    compile name: 'lucene-final'
+    compile name: 'lucene-analyzers-common-5.1.0'
+    compile name: 'lucene-core-5.1.0'
+    compile name: 'lucene-queryparser-5.1.0'
 }
 
 sourceSets.all {

@@ -33,19 +33,20 @@ public class RegistroUsuarioEJB implements RegistroUsuarioEJBLocal {
         logger.entering(this.getClass().getName(), "agregarUsuario", "UsuarioRegistroPost");        
         Usuario nuevo = new Usuario();
         
-        nuevo.setEmailUsuario(usuarioPost.getEmail());     
+        nuevo.setIdUsuario(200);        
+        nuevo.setUsername(usuarioPost.getNombre_usuario());
         nuevo.setPassUsuario(""+usuarioPost.getPass());
         nuevo.setNombreUsuario(usuarioPost.getNombre());
-        nuevo.setNumeroMovilusuario(usuarioPost.getFono());
-        nuevo.setSexoUsuario(usuarioPost.getSexo());
-               
-        GregorianCalendar c = new GregorianCalendar(usuarioPost.getYear(), usuarioPost.getMes()-1, usuarioPost.getDia());
-        Date nacimiento = new Date(c.getTimeInMillis());       
-        nuevo.setFechaNacimientousuario(nacimiento);
-        
-        nuevo.setIdUsuario(200);
         nuevo.setApellidoUsuario(usuarioPost.getApellido());
-        nuevo.setPaisUsuario(usuarioPost.getPais());        
+        nuevo.setEmailUsuario(usuarioPost.getEmail());           
+        nuevo.setNumeroMovilusuario(usuarioPost.getFono());                 
+        GregorianCalendar c = new GregorianCalendar(usuarioPost.getYear(), usuarioPost.getMes()-1, usuarioPost.getDia());
+        Date nacimiento = new Date(c.getTimeInMillis());          
+        nuevo.setFechaNacimientousuario(nacimiento);
+        nuevo.setSexoUsuario(usuarioPost.getSexo());  
+        nuevo.setPaisUsuario(usuarioPost.getPais());  
+        nuevo.setFotosSubidas(0);
+        nuevo.setCantidadAlbunes(0);                
                 
         if(!usuarioFacade.existeEmail(nuevo.getEmailUsuario()) && !usuarioFacade.existeUserName(nuevo.getUsername())){            
             usuarioFacade.create(nuevo);

@@ -1,2 +1,4 @@
 /bin/
 /.nb-gradle/
+/build/
+/src/main/java/ejb/BuscadorLucene.java

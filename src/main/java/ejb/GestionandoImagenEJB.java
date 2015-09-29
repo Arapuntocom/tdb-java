@@ -286,7 +286,7 @@ public class GestionandoImagenEJB implements GestionandoImagenEJBLocal {
         GregorianCalendar gc = new GregorianCalendar();
         Date fechaActual = new Date();
         fechaActual.setTime(gc.getTimeInMillis());
-        Usuario usuario = usuarioFacadeLocal.find(album.getIdUsuario()); //suponiendo que el campo idUsuario trae solo el id del usuario
+        Usuario usuario = usuarioFacadeLocal.find(album.getIdUsuario().getIdUsuario()); //suponiendo que el campo idUsuario trae solo el id del usuario
         if(usuario != null){
             Album nuevo = new Album(); 
             nuevo.setDescripcionAlbum(album.getDescripcionAlbum()); 

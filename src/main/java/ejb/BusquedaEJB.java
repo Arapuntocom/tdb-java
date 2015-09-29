@@ -11,12 +11,14 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import model.Comentario;
 import Buscador.Lucene;
+import facade.ImagenFacadeLocal;
 import facade.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Imagen;
 import model.Usuario;
 
 /**
@@ -33,6 +35,9 @@ public class BusquedaEJB implements BusquedaEJBLocal {
 
     @EJB
     private UsuarioFacadeLocal usuarioFacadeLocal;
+    
+    @EJB
+    private ImagenFacadeLocal imagenFacadeLocal;
 
     @Override
     public List<Comentario> busquedaComentarios(String texto) {
@@ -53,7 +58,7 @@ public class BusquedaEJB implements BusquedaEJBLocal {
             logger.severe("Error al buscar, IOException: " + ioe);
         } catch (SQLException sqle) {
             logger.severe("Error al buscar, SQLException: " + sqle);
-        }
+        } 
         logger.exiting(this.getClass().getName(), "busquedaComentarios", null);
         return retorno;
     }
@@ -76,9 +81,27 @@ public class BusquedaEJB implements BusquedaEJBLocal {
             logger.severe("Error al buscar, IOException: " + ioe);
         } catch (SQLException sqle) {
             logger.severe("Error al buscar, SQLException: " + sqle);
-        }
+        } 
         logger.exiting(this.getClass().getName(), "busquedaPersonas", null);
         return retorno;
     }
 
+    @Override
+    public List<Imagen> busquedaImagenByPais(String texto) {
+        logger.setLevel(Level.ALL);
+        logger.entering(this.getClass().getName(), "busquedaImagenByPais", texto);
+        List<String> ids = imagenFacadeLocal.busquedaImagenByPais(texto);
+        if(ids != null){
+            List<Imagen> imagenes = new ArrayList<>();
+            for(int i =0; i<ids.size(); i++){
+                imagenes.add(imagenFacadeLocal.find(ids.get(i)));
+            }
+            logger.exiting(this.getClass().getName(), "busquedaImagenByPais", imagenes.size());
+            return imagenes;
+        }
+        else
+            logger.exiting(this.getClass().getName(), "busquedaImagenByPais", "Sin resultados");
+        return null;
+    }
+    
 }

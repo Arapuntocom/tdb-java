@@ -14,6 +14,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import model.Album;
 
 /**
@@ -30,6 +31,7 @@ public class TestAlbumService {
     private TestAlbumEJBLocal testAlbumEJBLocal;
     
     @GET
+    @Produces("application/json")
     public List<Album> findAll(){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "findAll");

@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import model.Comentario;
 import model.DatosBusqueda;
+import model.Imagen;
 import model.Usuario;
 
 
@@ -79,7 +80,7 @@ public class BusquedaService {
     
     @GET
     @Path("usuarios/{username}")
-    @Consumes("application/json")
+    @Produces("application/json")
     public List<Usuario> buscarUsuariosByUsername(@PathParam("username") String username){
         logger.setLevel(Level.ALL);
         logger.entering(this.getClass().getName(), "buscarUsuariosByUsernamePOST", username);
@@ -88,6 +89,34 @@ public class BusquedaService {
             logger.exiting(this.getClass().getName(), "buscarUsuariosByUsernamePOST", retorno.size());
         else
             logger.exiting(this.getClass().getName(), "buscarUsuariosByUsernamePOST", "Sin resultados");
+        return retorno; 
+    }
+    
+    @POST
+    @Path("imagenes")
+    @Consumes("application/json")
+    public List<Imagen> buscarImagenesByComentarios(DatosBusqueda datosBusqueda){
+        logger.setLevel(Level.ALL);
+        logger.entering(this.getClass().getName(), "buscarImagenesByComentarios");
+        List<Imagen> retorno = busquedaEJBLocal.busquedaImagenByPais(datosBusqueda.getTexto());
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "buscarImagenesByComentarios", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "buscarImagenesByComentarios", "Sin resultados");
+        return retorno; 
+    }
+    
+    @GET
+    @Path("imagenes/{pais}")
+    @Produces("application/json")
+    public List<Imagen> buscarImagenesByPais(@PathParam("pais") String texto){
+        logger.setLevel(Level.ALL);
+        logger.entering(this.getClass().getName(), "buscarImagenesByComentarios");
+        List<Imagen> retorno = busquedaEJBLocal.busquedaImagenByPais(texto);
+        if(retorno != null)
+            logger.exiting(this.getClass().getName(), "buscarImagenesByComentarios", retorno.size());
+        else
+            logger.exiting(this.getClass().getName(), "buscarImagenesByComentarios", "Sin resultados");
         return retorno; 
     }
 }

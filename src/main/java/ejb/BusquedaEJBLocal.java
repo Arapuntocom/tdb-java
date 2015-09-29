@@ -8,6 +8,7 @@ package ejb;
 import java.util.List;
 import javax.ejb.Local;
 import model.Comentario;
+import model.Imagen;
 import model.Usuario;
 
 /**
@@ -20,5 +21,7 @@ public interface BusquedaEJBLocal {
     public List<Comentario> busquedaComentarios(String texto);
     
     public List<Usuario> busquedaPersonas(String username);
+    
+    public List<Imagen> busquedaImagenByPais(String pais);
     
 }

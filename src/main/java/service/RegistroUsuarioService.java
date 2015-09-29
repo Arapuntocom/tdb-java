@@ -32,9 +32,9 @@ public class RegistroUsuarioService {
         Usuario nuevo = null;
         nuevo = registroUsuarioEJBLocal.agregarUsuario(usuarioPost);
         if(nuevo != null)
-            logger.exiting(this.getClass().getName(), "create", nuevo.toString());
+            logger.exiting(this.getClass().getName(), "createPost", nuevo.toString());
         else
-            logger.exiting(this.getClass().getName(), "create", "Usuario NO creado");
+            logger.exiting(this.getClass().getName(), "createPost", "Usuario NO creado");
         return nuevo;
     }
     

@@ -5,7 +5,6 @@
  */
 package ejb;
 
-//import clasificador.NuevaClase;
 import classifier.ClassifierSentiment;
 import clean.NormalizerTweets;
 import clean.SimpleTokenizer;
@@ -20,7 +19,7 @@ import javax.ejb.Stateless;
  * @author Aracelly
  */
 @Stateless
-public class ClasificadorWekaEJB implements ClasificadorWekaLocal {
+public class ClasificadorWeka implements ClasificadorWekaLocal {
 
     @Override
     public int clasificar(String texto) throws IOException, Exception {
@@ -46,10 +45,15 @@ public class ClasificadorWekaEJB implements ClasificadorWekaLocal {
         }
     }
 
-    /*public static void main(String args[]) throws Exception {
-    ClasificadorWekaEJB nn = new ClasificadorWekaEJB();
-    String comentario = "feo malo negativo no no ";
-    System.out.println("La clasificacion de '" + comentario + "' es -> " + nn.clasificar(comentario));
-    }*/
+//    public static void main(String args[]) {
+//    ClasificadorWeka nn = new ClasificadorWeka();
+//    String comentario = "te felicitico, muy buen trabajo";
+//        try {
+//            System.out.println("La clasificacion de '" + comentario + "' es -> " + nn.clasificar(comentario));
+//        } catch (Exception ex) {
+//           // Logger.getLogger(ClasificadorWeka.class.getName()).log(Level.SEVERE, null, ex);
+//            System.out.println("No se puede clasificar: "+ex);
+//        }
+//    }
 
 }

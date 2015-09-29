@@ -18,9 +18,9 @@ import model.Album;
  * @author Aracelly
  */
 @Stateless
-class TestAlbumEJB implements TestAlbumEJBLocal {
+public class TestAlbumEJB implements TestAlbumEJBLocal {
 
-    static final Logger logger = Logger.getLogger(TestAlbumEJBLocal.class.getName());
+    static final Logger logger = Logger.getLogger(TestAlbumEJB.class.getName());
     
     @EJB
     private AlbumFacadeLocal albumFacadeLocal;

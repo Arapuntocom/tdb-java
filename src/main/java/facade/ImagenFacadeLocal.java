@@ -30,4 +30,5 @@ public interface ImagenFacadeLocal {
 
     int count();
     
+    public List<String> busquedaImagenByPais(String pais);
 }

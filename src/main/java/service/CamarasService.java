@@ -38,6 +38,5 @@ public class CamarasService {
         else
             logger.exiting(this.getClass().getName(), "findAll", "Sin resultados.");
         return retorno;
-    }
-    
+    }    
 }
