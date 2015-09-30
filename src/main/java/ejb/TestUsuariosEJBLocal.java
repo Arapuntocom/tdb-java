@@ -8,6 +8,7 @@ package ejb;
 import java.util.List;
 import javax.ejb.Local;
 import model.Usuario;
+import model.UsuarioRegistroPost;
 
 /**
  *
@@ -17,7 +18,7 @@ import model.Usuario;
 public interface TestUsuariosEJBLocal {
     
     
-    public void editar(Usuario usuario);
+    public void editar(UsuarioRegistroPost usuario);
     
     public Usuario encontrarId(int id);
     

@@ -5,12 +5,17 @@
  */
 package ejb;
 
+
 import facade.UsuarioFacadeLocal;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import model.Usuario;
+import model.UsuarioRegistroPost;
 
 /**
  *
@@ -28,9 +33,38 @@ public class TestUsuariosEJB implements TestUsuariosEJBLocal {
     }
     
     @Override
-    public void editar(Usuario usuario){
-        logger.info("editar usuario id->"+usuario.getIdUsuario());
-        usuarioFacade.edit(usuario);
+    public void editar(UsuarioRegistroPost usuarioPost){
+        logger.setLevel(Level.ALL);
+        logger.entering(this.getClass().getName(), "editar", usuarioPost.getIdUsuario());        
+        Usuario editado = usuarioFacade.find(usuarioPost.getIdUsuario());
+        if(editado != null){
+            
+            logger.info(usuarioPost.getApellido());
+            logger.info(usuarioPost.getEmail());
+            logger.info(usuarioPost.getFono());
+            logger.info(usuarioPost.getNombre());
+            logger.info(usuarioPost.getNombre_usuario());
+            logger.info(usuarioPost.getPais());
+            logger.info(usuarioPost.getPass());
+            logger.info(usuarioPost.getSexo());
+            
+            editado.setUsername(usuarioPost.getNombre_usuario());
+            editado.setNombreUsuario(usuarioPost.getNombre());
+            editado.setApellidoUsuario(usuarioPost.getApellido());
+            editado.setEmailUsuario(usuarioPost.getEmail());           
+            editado.setNumeroMovilusuario(usuarioPost.getFono());                 
+            GregorianCalendar c = new GregorianCalendar(usuarioPost.getYear(), usuarioPost.getMes()-1, usuarioPost.getDia());
+            Date nacimiento = new Date(c.getTimeInMillis());          
+            editado.setFechaNacimientousuario(nacimiento);
+            editado.setSexoUsuario(usuarioPost.getSexo());  
+            editado.setPaisUsuario(usuarioPost.getPais()); 
+            
+            
+            //usuarioFacade.edit(editado);
+            logger.exiting(this.getClass().getName(), "editar", "(a persistencia)");
+        }              
+        else
+            logger.exiting(this.getClass().getName(), "editar", "No se pudo editar");        
     }
     
     @Override

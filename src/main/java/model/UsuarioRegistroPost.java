@@ -21,6 +21,7 @@ public class UsuarioRegistroPost {
     private int year;
     private int mes;
     private int dia;
+    private int idUsuario;
 
     public UsuarioRegistroPost() {
     }
@@ -114,5 +115,11 @@ public class UsuarioRegistroPost {
         this.dia = dia;
     }
     
-    
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }    
 }

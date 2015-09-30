@@ -58,10 +58,10 @@ public class Comentario implements Serializable {
     @NotNull
     @Column(name = "clasificacion_comentario")
     private int clasificacionComentario;
-    @JoinColumn(name = "Usuario_id_usuario", referencedColumnName = "id_usuario")
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
     @ManyToOne(optional = false)
     private Usuario usuarioidusuario;
-    @JoinColumn(name = "Imagen_id_imagen", referencedColumnName = "id_imagen")
+    @JoinColumn(name = "id_imagen", referencedColumnName = "id_imagen")
     @ManyToOne(optional = false)
     private Imagen imagenidimagen;
 
